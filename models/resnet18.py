@@ -75,7 +75,7 @@ class FusionModel(nn.Module):
         pooled_view = self.classifier(x)
         return pooled_view
 
-class MOOModel(nn.Module):
+class LaserModel(nn.Module):
     
     def __init__(self, dataset, num_clients, pixels_per_axis=28): # TODO Model(dataset=dataset, num_clients=num_clients)
         super().__init__()

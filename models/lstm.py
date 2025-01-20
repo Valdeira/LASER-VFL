@@ -155,7 +155,7 @@ class DecoupledModel(nn.Module):
         with torch.no_grad():
             return feature_extractor(input_tensor)
 
-class MOOModel(nn.Module):
+class LaserModel(nn.Module):
     
     def __init__(self, dataset, args, vocab_d, config):
         

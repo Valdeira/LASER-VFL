@@ -95,7 +95,7 @@ class DecoupledModel(nn.Module):
             return feature_extractor(input_tensor)
 
 
-class MOOModel(nn.Module):
+class LaserModel(nn.Module):
     
     def __init__(self, dataset, num_clients):
         

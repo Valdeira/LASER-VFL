@@ -21,7 +21,7 @@ def get_optimizer(method: str, name: str, model, config: dict):
     Select and configure optimizer based on the method and name.
 
     Parameters:
-    - method (str): The optimization method ("moo" or "decoupled").
+    - method (str): The optimization method ("laser" or "decoupled").
     - name (str): The name of the optimizer ("adam" or "sgd").
     - model: The model or list of models to optimize.
     - config (dict): Configuration dictionary containing "lr" and optional "weight_decay" and "momentum".
@@ -34,7 +34,7 @@ def get_optimizer(method: str, name: str, model, config: dict):
     except KeyError:
         raise ValueError(f"Unknown optimizer name: {name}")
 
-    if method == "moo":
+    if method == "laser":
         return [create_optimizer(optimizer_class, m, config, name) for m in model]
     elif method == "decoupled" or "ensemble":
         return [create_optimizer(optimizer_class, m, config, name) for m in model]

@@ -1,4 +1,4 @@
-moo:
+laser:
   credit: # task
     4: # num_clients
       0.0: # p_miss_train

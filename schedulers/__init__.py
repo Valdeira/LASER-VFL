@@ -15,7 +15,7 @@ def get_scheduler(method: str, name: str, optimizer, config: dict):
     Select and configure scheduler based on the method and name.
 
     Parameters:
-    - method (str): The scheduling method ("moo" or "decoupled").
+    - method (str): The scheduling method ("laser" or "decoupled").
     - name (str): The name of the scheduler ("cosine_annealing_lr").
     - optimizer: The optimizer or list of optimizers to apply the scheduler to.
     - config (dict): Configuration dictionary containing "num_epochs", "lr", and optional "eta_min_ratio".
@@ -31,7 +31,7 @@ def get_scheduler(method: str, name: str, optimizer, config: dict):
     except KeyError:
         raise ValueError(f"Unknown scheduler name: {name}")
 
-    if method == "moo":
+    if method == "laser":
         return [create_scheduler(scheduler_class, opt, config, name) for opt in optimizer]
     elif method == "decoupled" or "ensemble":
         return [create_scheduler(scheduler_class, opt, config, name) for opt in optimizer]
