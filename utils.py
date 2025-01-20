@@ -19,13 +19,14 @@ from data.custom_dataset import generate_mask_patterns_for_batches, CustomDatase
 from data.custom_dataset import CustomMIMICDataset, HAPTDataset, CreditDataset
 
 
-def get_dataloaders(dataset, batch_size, args, num_workers=1, final_p_miss_test=None):
+def get_dataloaders(args, config, p_miss_test=0.0):
+    dataset, batch_size, num_workers = config["dataset"], config["batch_size"], config["num_workers"]
 
     data_dir = Path(__file__).absolute().parent.parent / 'data' / dataset
 
     if dataset in ['cifar10', 'cifar100']:
         if dataset == 'cifar100':
-            transform_aux = transforms.Compose([# transforms.RandomErasing(p=0.3, scale=(0.02, 0.1), ratio=(0.5, 2.0), value='random'),
+            transform_aux = transforms.Compose([
                                                 transforms.Normalize((0.5071, 0.4867, 0.4408), (0.2675, 0.2565, 0.2761)),
                                                 ])
         if dataset == 'cifar10':
@@ -52,7 +53,6 @@ def get_dataloaders(dataset, batch_size, args, num_workers=1, final_p_miss_test=
         test_dataset = HAPTDataset('../data/HAPT/X_test.txt', '../data/HAPT/y_test.txt', num_clients=args.num_clients)
         num_test_samples = len(test_dataset)
         num_test_batches = (num_test_samples + batch_size - 1) // batch_size
-        p_miss_test = final_p_miss_test if final_p_miss_test is not None else args.p_miss_test
         p_observed_test = 1 - p_miss_test
         test_batch_patterns = generate_mask_patterns_for_batches(num_test_batches, args.num_clients, p_observed_test)
         test_dataset = CustomDataset(test_dataset, test_batch_patterns, batch_size)
@@ -82,7 +82,6 @@ def get_dataloaders(dataset, batch_size, args, num_workers=1, final_p_miss_test=
         test_dataset = CreditDataset('../data/credit/X_test.npy', '../data/credit/y_test.npy', num_clients=args.num_clients)
         num_test_samples = len(test_dataset)
         num_test_batches = (num_test_samples + batch_size - 1) // batch_size
-        p_miss_test = final_p_miss_test if final_p_miss_test is not None else args.p_miss_test
         p_observed_test = 1 - p_miss_test
         test_batch_patterns = generate_mask_patterns_for_batches(num_test_batches, args.num_clients, p_observed_test)
         test_dataset = CustomDataset(test_dataset, test_batch_patterns, batch_size)
@@ -107,7 +106,6 @@ def get_dataloaders(dataset, batch_size, args, num_workers=1, final_p_miss_test=
         test_dataset = CustomMIMICDataset(test_hids, vocab_d["gender_vocab"], vocab_d["eth_vocab"], vocab_d["ins_vocab"], vocab_d["age_vocab"], "test")
         num_test_samples = len(test_dataset)
         num_test_batches = (num_test_samples + batch_size - 1) // batch_size
-        p_miss_test = final_p_miss_test if final_p_miss_test is not None else args.p_miss_test
         p_observed_test = 1 - p_miss_test
         test_batch_patterns = generate_mask_patterns_for_batches(num_test_batches, args.num_clients, p_observed_test)
         test_dataset = CustomDataset(test_dataset, test_batch_patterns, batch_size)
@@ -129,7 +127,6 @@ def get_dataloaders(dataset, batch_size, args, num_workers=1, final_p_miss_test=
     test_set = Dataset(data_dir, download=True, train=False, transform=transform)
     num_test_samples = len(test_set)
     num_test_batches = (num_test_samples + batch_size - 1) // batch_size
-    p_miss_test = final_p_miss_test if final_p_miss_test is not None else args.p_miss_test
     p_observed_test = 1 - p_miss_test
     test_batch_patterns = generate_mask_patterns_for_batches(num_test_batches, args.num_clients, p_observed_test)
     test_dataset = CustomDataset(test_set, test_batch_patterns, batch_size)
@@ -138,7 +135,7 @@ def get_dataloaders(dataset, batch_size, args, num_workers=1, final_p_miss_test=
     return train_loader, test_loader
 
 def print_exp_info(args, config, epoch):
-    s = f'epoch:[{epoch + 1}/{config["num_epochs"]}]  {args.device}  {args.task_name}  method:{args.method}  K:{args.num_clients}  p_miss_train:{args.p_miss_train}  p_miss_test:{args.p_miss_test}  seed:{args.seed}  lr:{config["lr"]}  decay:{config["weight_decay"]}  mom:{config["momentum"]}'
+    s = f'epoch:[{epoch + 1}/{config["num_epochs"]}]  {args.device}  {args.task_name}  method:{args.method}  K:{args.num_clients}  p_miss_train:{args.p_miss_train}  seed:{args.seed}  lr:{config["lr"]}  decay:{config["weight_decay"]}  mom:{config["momentum"]}'
     print(f"{len(s) * '-'}\n{s}\n{len(s) * '-'}")
 
 def init_wandb(args, config):
@@ -156,8 +153,6 @@ def init_wandb(args, config):
             'weight_decay': config["weight_decay"],
             'momentum': config["momentum"],
             }
-    
-    wandb_config['l2_loss'] = args.l2_loss if hasattr(args, 'l2_loss') else None
 
     name = args.wandb_name if args.wandb_name is not None else f'{args.task_name}_{args.method}_K{args.num_clients}_p_miss_train{args.p_miss_train}_s{args.seed}'
 
@@ -334,7 +329,7 @@ def train_decoupled(dataloader, models, optimizers, criterion, args, compute_f1=
     return metrics
 
 @time_decorator
-def test_moo(dataloader, models, criterion, device, is_final=False, compute_f1=False, is_train_data=False):
+def test_laser(dataloader, models, criterion, device, is_final=False, compute_f1=False, is_train_data=False):
     
     [model] = models
 
@@ -411,7 +406,7 @@ def test_moo(dataloader, models, criterion, device, is_final=False, compute_f1=F
     return metrics
 
 @time_decorator
-def train_moo(dataloader, models, optimizers, criterion, args, compute_f1=False):
+def train_laser(dataloader, models, optimizers, criterion, args, compute_f1=False):
     
     [model], [optimizer] = models, optimizers
 
@@ -457,7 +452,7 @@ def train_moo(dataloader, models, optimizers, criterion, args, compute_f1=False)
                 n, k = (len(observed_blocks)-1, len(clients_subset)-1)
                 norm_constant = norm_constant * math.comb(n, k)
 
-                head_loss += loss ** 2 * norm_constant if args.l2_loss else loss * norm_constant
+                head_loss += loss * norm_constant
 
                 # We divide the metrics by the number of predictors we have for this task, so that we get averaged metrics
                 # (across the heads performing each task). This allows for metrics which are comparable to those of the decoupled approach.
@@ -470,9 +465,6 @@ def train_moo(dataloader, models, optimizers, criterion, args, compute_f1=False)
                         true_positive_d[clients_subset] += ((predicted == 1) & (targets == 1)).sum().item() / norm_constant
                         false_positive_d[clients_subset] += ((predicted == 1) & (targets == 0)).sum().item() / norm_constant
                         false_negative_d[clients_subset] += ((predicted == 0) & (targets == 1)).sum().item() / norm_constant
-
-            if args.l2_loss:
-                head_loss = head_loss ** 0.5
 
             total_loss += head_loss
 
@@ -727,8 +719,8 @@ def setup_task(args):
     scheduler = get_scheduler(args.method, config["scheduler"], optimizer, config)
     criterion = get_criterion(config["criterion"])
 
-    if args.method == "moo":
-        train, test = train_moo, test_moo
+    if args.method == "laser":
+        train, test = train_laser, test_laser
     elif args.method == "decoupled":
         train, test = train_decoupled, test_decoupled
     elif args.method == "ensemble":
@@ -738,18 +730,18 @@ def setup_task(args):
     
     return config, model, optimizer, scheduler, criterion, train, test
 
-def handle_sets_of_clients_in_tasks(args):
+def check_sets_of_clients_valid(args):
 
-        if args.sets_of_clients_in_tasks is not None:
-            if args.method == 'moo':
-                raise ValueError("sets_of_clients_in_tasks should not be provided when method is 'moo'")
+        if args.blocks_in_tasks_t is not None:
+            if args.method == 'laser':
+                raise ValueError("blocks_in_tasks_t should not be provided when method is 'laser'")
             try: # Convert the string representation of the list of tuples to an actual list of tuples
-                args.sets_of_clients_in_tasks = ast.literal_eval(args.sets_of_clients_in_tasks)
+                args.blocks_in_tasks_t = ast.literal_eval(args.blocks_in_tasks_t)
             except (ValueError, SyntaxError):
-                raise ValueError("Invalid format for sets_of_clients_in_tasks. It should be a valid list of tuples.")
+                raise ValueError("Invalid format for blocks_in_tasks_t. It should be a valid list of tuples.")
         else:
-            # Default to powerset_except_empty(args.num_clients) for both 'decoupled' and 'moo'
-            args.sets_of_clients_in_tasks = powerset_except_empty(args.num_clients)
+            # Default to powerset_except_empty(args.num_clients) for both 'decoupled' and 'laser'
+            args.blocks_in_tasks_t = powerset_except_empty(args.num_clients)
 
 def create_mimic_train_test_split():
         labels = pd.read_csv('data/MIMIC-IV-Data-Pipeline/data/csv/labels.csv', header=0)
@@ -774,7 +766,7 @@ def get_f1(true_positive, false_positive, false_negative):
     f1 = 2 * (precision * recall) / (precision + recall + 1e-10)
     return f1
 
-def get_metrics(train_metrics, test_metrics, compute_f1, sets_of_clients_in_tasks):
+def get_metrics(train_metrics, test_metrics, compute_f1, blocks_in_tasks_t):
     
     metrics = {
             str(clients): {
@@ -784,7 +776,7 @@ def get_metrics(train_metrics, test_metrics, compute_f1, sets_of_clients_in_task
                 "test_acc": test_metrics["test_acc"][i],
                 **({"train_f1": train_metrics["train_f1"][i], "test_f1": test_metrics["test_f1"][i]} if compute_f1 else {})
             }
-            for i, clients in enumerate(sets_of_clients_in_tasks)
+            for i, clients in enumerate(blocks_in_tasks_t)
         }
     
     return metrics
