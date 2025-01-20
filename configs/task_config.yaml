@@ -1,0 +1,1390 @@
+moo:
+  credit: # task
+    4: # num_clients
+      0.0: # p_miss_train
+        dataset: credit
+        model: mlp_small
+        criterion: cross_entropy
+        num_epochs: 100
+        batch_size: 128
+        optimizer: adam
+        lr: 0.0001
+        weight_decay: 0.001
+        momentum: n/a
+        scheduler: n/a
+        eta_min_ratio:  n/a
+        num_workers: 1
+
+      0.1: # p_miss_train
+        dataset: credit
+        model: mlp_small
+        criterion: cross_entropy
+        num_epochs: 100
+        batch_size: 128
+        optimizer: adam
+        lr: 0.0001
+        weight_decay: 0.001
+        momentum: n/a
+        scheduler: n/a
+        eta_min_ratio:  n/a
+        num_workers: 1
+      
+      0.5: # p_miss_train
+        dataset: credit
+        model: mlp_small
+        criterion: cross_entropy
+        num_epochs: 125
+        batch_size: 128
+        optimizer: adam
+        lr: 0.0001
+        weight_decay: 0.001
+        momentum: n/a
+        scheduler: cosine_annealing_lr
+        eta_min_ratio: 0.2
+        num_workers: 1
+
+  cifar10: # task
+    2: # num_clients
+      0.1: # p_miss_train
+        dataset: cifar10
+        model: resnet18
+        criterion: cross_entropy
+        num_epochs: 100
+        batch_size: 1024
+        optimizer: sgd
+        lr: 0.1
+        weight_decay: 0.008
+        momentum: 0.5
+        scheduler: cosine_annealing_lr
+        eta_min_ratio: 0.02
+        num_workers: 8
+    
+    3: # num_clients
+      0.1: # p_miss_train
+        dataset: cifar10
+        model: resnet18
+        criterion: cross_entropy
+        num_epochs: 100
+        batch_size: 1024
+        optimizer: sgd
+        lr: 0.1
+        weight_decay: 0.008
+        momentum: 0.5
+        scheduler: cosine_annealing_lr
+        eta_min_ratio: 0.02
+        num_workers: 8
+      
+    5: # num_clients
+      0.1: # p_miss_train
+        dataset: cifar10
+        model: resnet18
+        criterion: cross_entropy
+        num_epochs: 100
+        batch_size: 1024
+        optimizer: sgd
+        lr: 0.05
+        weight_decay: 0.008
+        momentum: 0.5
+        scheduler: cosine_annealing_lr
+        eta_min_ratio: 0.02
+        num_workers: 8
+
+    6: # num_clients
+      0.1: # p_miss_train
+        dataset: cifar10
+        model: resnet18
+        criterion: cross_entropy
+        num_epochs: 100
+        batch_size: 1024
+        optimizer: sgd
+        lr: 0.05
+        weight_decay: 0.008
+        momentum: 0.5
+        scheduler: cosine_annealing_lr
+        eta_min_ratio: 0.02
+        num_workers: 8
+      
+    7: # num_clients
+      0.1: # p_miss_train
+        dataset: cifar10
+        model: resnet18
+        criterion: cross_entropy
+        num_epochs: 100
+        batch_size: 1024
+        optimizer: sgd
+        lr: 0.03
+        weight_decay: 0.008
+        momentum: 0.5
+        scheduler: cosine_annealing_lr
+        eta_min_ratio: 0.02
+        num_workers: 8
+    
+    8: # num_clients
+      0.1: # p_miss_train
+        dataset: cifar10
+        model: resnet18
+        criterion: cross_entropy
+        num_epochs: 100
+        batch_size: 1024
+        optimizer: sgd
+        lr: 0.02
+        weight_decay: 0.008
+        momentum: 0.5
+        scheduler: cosine_annealing_lr
+        eta_min_ratio: 0.02
+        num_workers: 8
+    
+    9: # num_clients
+      0.1: # p_miss_train
+        dataset: cifar10
+        model: resnet18
+        criterion: cross_entropy
+        num_epochs: 100
+        batch_size: 1024
+        optimizer: sgd
+        lr: 0.01
+        weight_decay: 0.008
+        momentum: 0.5
+        scheduler: cosine_annealing_lr
+        eta_min_ratio: 0.02
+        num_workers: 8
+    
+    10: # num_clients
+      0.1: # p_miss_train
+        dataset: cifar10
+        model: resnet18
+        criterion: cross_entropy
+        num_epochs: 100
+        batch_size: 1024
+        optimizer: sgd
+        lr: 0.005
+        weight_decay: 0.008
+        momentum: 0.5
+        scheduler: cosine_annealing_lr
+        eta_min_ratio: 0.02
+        num_workers: 8
+        
+    4: # num_clients
+
+      0.0: # p_miss_train
+        dataset: cifar10
+        model: resnet18
+        criterion: cross_entropy
+        num_epochs: 100
+        batch_size: 1024
+        optimizer: sgd
+        lr: 0.1
+        weight_decay: 0.008
+        momentum: 0.5
+        scheduler: cosine_annealing_lr
+        eta_min_ratio: 0.02
+        num_workers: 8
+      
+      0.1: # p_miss_train
+        dataset: cifar10
+        model: resnet18
+        criterion: cross_entropy
+        num_epochs: 100
+        batch_size: 1024
+        optimizer: sgd
+        lr: 0.1
+        weight_decay: 0.008
+        momentum: 0.5
+        scheduler: cosine_annealing_lr
+        eta_min_ratio: 0.02
+        num_workers: 8
+      
+      0.5: # p_miss_train
+        dataset: cifar10
+        model: resnet18
+        criterion: cross_entropy
+        num_epochs: 100
+        batch_size: 1024
+        optimizer: sgd
+        lr: 0.1
+        weight_decay: 0.008
+        momentum: 0.5
+        scheduler: cosine_annealing_lr
+        eta_min_ratio: 0.02
+        num_workers: 8
+      
+      null: # p_miss_train
+        dataset: cifar10
+        model: resnet18
+        criterion: cross_entropy
+        num_epochs: 100
+        batch_size: 1024
+        optimizer: sgd
+        lr: 0.1
+        weight_decay: 0.008
+        momentum: 0.5
+        scheduler: cosine_annealing_lr
+        eta_min_ratio: 0.02
+        num_workers: 8
+
+  cifar100: # task
+    4: # num_clients
+      0.0: # p_miss_train
+        dataset: cifar100
+        model: resnet18
+        criterion: cross_entropy
+        num_epochs: 150
+        batch_size: 1024
+        optimizer: sgd
+        lr: 0.15
+        weight_decay: 0.007
+        momentum: 0.5
+        scheduler: cosine_annealing_lr
+        eta_min_ratio: 0.02
+        num_workers: 8
+      
+      0.1: # p_miss_train
+        dataset: cifar100
+        model: resnet18
+        criterion: cross_entropy
+        num_epochs: 150
+        batch_size: 1024
+        optimizer: sgd
+        lr: 0.1
+        weight_decay: 0.007
+        momentum: 0.5
+        scheduler: cosine_annealing_lr
+        eta_min_ratio: 0.02
+        num_workers: 8
+      
+      0.5: # p_miss_train
+        dataset: cifar100
+        model: resnet18
+        criterion: cross_entropy
+        num_epochs: 150
+        batch_size: 1024
+        optimizer: sgd
+        lr: 0.1
+        weight_decay: 0.007
+        momentum: 0.5
+        scheduler: cosine_annealing_lr
+        eta_min_ratio: 0.02
+        num_workers: 8
+
+  mimic4: # task
+    4: # num_clients
+      0.0: # p_miss_train
+        dataset: mimic4
+        model: lstm
+        criterion: cross_entropy
+        num_epochs: 20
+        batch_size: 128
+        optimizer: adam
+        lr: 0.001
+        weight_decay: 0.0
+        momentum: n/a
+        scheduler: n/a
+        eta_min_ratio: n/a
+        num_workers: 2
+  
+      0.1: # p_miss_train
+        dataset: mimic4
+        model: lstm
+        criterion: cross_entropy
+        num_epochs: 20
+        batch_size: 128
+        optimizer: adam
+        lr: 0.001
+        weight_decay: 0.0
+        momentum: n/a
+        scheduler: n/a
+        eta_min_ratio: n/a
+        num_workers: 2
+  
+      0.5: # p_miss_train
+        dataset: mimic4
+        model: lstm
+        criterion: cross_entropy
+        num_epochs: 20
+        batch_size: 128
+        optimizer: adam
+        lr: 0.001
+        weight_decay: 0.0
+        momentum: n/a
+        scheduler: n/a
+        eta_min_ratio: n/a
+        num_workers: 2
+
+  hapt: # task
+    4: # num_clients
+      0.0: # p_miss_train
+        dataset: hapt
+        model: mlp
+        criterion: cross_entropy
+        num_epochs: 100
+        batch_size: 128
+        optimizer: sgd
+        lr: 0.03
+        weight_decay: 0.0001
+        momentum: 0.8
+        scheduler: n/a
+        eta_min_ratio:  n/a
+        num_workers: 1
+      
+      0.1: # p_miss_train
+        dataset: hapt
+        model: mlp
+        criterion: cross_entropy
+        num_epochs: 100 # tune
+        batch_size: 128 # tune
+        optimizer: sgd
+        lr: 0.03
+        weight_decay: 0.0001 # was 0.01 # tune
+        momentum: 0.8
+        scheduler: n/a
+        eta_min_ratio:  n/a
+        num_workers: 1 # tune
+      
+      0.5: # p_miss_train
+        dataset: hapt
+        model: mlp
+        criterion: cross_entropy
+        num_epochs: 100 # tune
+        batch_size: 128 # tune
+        optimizer: sgd
+        lr: 0.02
+        weight_decay: 0.0001 # was 0.01 # tune
+        momentum: 0.7
+        scheduler: n/a
+        eta_min_ratio:  n/a
+        num_workers: 1 # tune
+
+decoupled:
+  credit: # task
+    4: # num_clients
+      0.0: # p_miss_train
+        dataset: credit
+        model: mlp_small
+        criterion: cross_entropy
+        num_epochs: 75 # was 50 for local
+        batch_size: 128
+        optimizer: adam
+        lr: 0.0001
+        weight_decay: 0.0001
+        momentum: n/a
+        scheduler: n/a
+        eta_min_ratio:  n/a
+        num_workers: 1
+
+      0.1: # p_miss_train
+        dataset: credit
+        model: mlp_small
+        criterion: cross_entropy
+        num_epochs: 75 # was 50 for local
+        batch_size: 128
+        optimizer: adam
+        lr: 0.0001
+        weight_decay: 0.0001
+        momentum: n/a
+        scheduler: n/a
+        eta_min_ratio:  n/a
+        num_workers: 1
+      
+      0.5: # p_miss_train
+        dataset: credit
+        model: mlp_small
+        criterion: cross_entropy
+        num_epochs: 75 # was 50 for local
+        batch_size: 128
+        optimizer: adam
+        lr: 0.0001
+        weight_decay: 0.0001
+        momentum: n/a
+        scheduler: n/a
+        eta_min_ratio:  n/a
+        num_workers: 1
+
+  hapt: # task
+    4: # num_clients
+      0.0: # p_miss_train
+        dataset: hapt
+        model: mlp
+        criterion: cross_entropy
+        num_epochs: 100
+        batch_size: 128
+        optimizer: sgd
+        lr: 0.05
+        weight_decay: 0.0001
+        momentum: 0.8
+        scheduler: n/a
+        eta_min_ratio:  n/a
+        num_workers: 1
+      
+      0.1: # p_miss_train
+        dataset: hapt
+        model: mlp
+        criterion: cross_entropy
+        num_epochs: 100 # tune
+        batch_size: 128 # tune
+        optimizer: sgd
+        lr: 0.05 # tune
+        weight_decay: 0.0001 # was 0.01 # tune
+        momentum: 0.8
+        scheduler: n/a
+        eta_min_ratio:  n/a
+        num_workers: 1 # tune
+      
+      0.5: # p_miss_train
+        dataset: hapt
+        model: mlp
+        criterion: cross_entropy
+        num_epochs: 100 # tune
+        batch_size: 128 # tune
+        optimizer: sgd
+        lr: 0.05 # tune
+        weight_decay: 0.0001 # was 0.01 # tune
+        momentum: 0.8
+        scheduler: n/a
+        eta_min_ratio:  n/a
+        num_workers: 1 # tune
+
+  cifar10: # task
+    2: # num_clients
+      0.1: # p_miss_train
+          dataset: cifar10
+          model: resnet18
+          criterion: cross_entropy
+          num_epochs: 100
+          batch_size: 1024
+          optimizer: sgd
+          lr: 0.1
+          weight_decay: 0.01
+          momentum: 0.5
+          scheduler: cosine_annealing_lr
+          eta_min_ratio: 0.02
+          num_workers: 8
+      
+    3: # num_clients
+      0.1: # p_miss_train
+          dataset: cifar10
+          model: resnet18
+          criterion: cross_entropy
+          num_epochs: 100
+          batch_size: 1024
+          optimizer: sgd
+          lr: 0.1
+          weight_decay: 0.01
+          momentum: 0.5
+          scheduler: cosine_annealing_lr
+          eta_min_ratio: 0.02
+          num_workers: 8
+    
+    5: # num_clients
+      0.1: # p_miss_train
+          dataset: cifar10
+          model: resnet18
+          criterion: cross_entropy
+          num_epochs: 100
+          batch_size: 1024
+          optimizer: sgd
+          lr: 0.1
+          weight_decay: 0.01
+          momentum: 0.5
+          scheduler: cosine_annealing_lr
+          eta_min_ratio: 0.02
+          num_workers: 8
+
+    6: # num_clients
+      0.1: # p_miss_train
+          dataset: cifar10
+          model: resnet18
+          criterion: cross_entropy
+          num_epochs: 100
+          batch_size: 1024
+          optimizer: sgd
+          lr: 0.1
+          weight_decay: 0.01
+          momentum: 0.5
+          scheduler: cosine_annealing_lr
+          eta_min_ratio: 0.02
+          num_workers: 8
+      
+    7: # num_clients
+      0.1: # p_miss_train
+          dataset: cifar10
+          model: resnet18
+          criterion: cross_entropy
+          num_epochs: 100
+          batch_size: 1024
+          optimizer: sgd
+          lr: 0.1
+          weight_decay: 0.01
+          momentum: 0.5
+          scheduler: cosine_annealing_lr
+          eta_min_ratio: 0.02
+          num_workers: 8
+    
+    8: # num_clients
+      0.1: # p_miss_train
+          dataset: cifar10
+          model: resnet18
+          criterion: cross_entropy
+          num_epochs: 100
+          batch_size: 1024
+          optimizer: sgd
+          lr: 0.1
+          weight_decay: 0.01
+          momentum: 0.5
+          scheduler: cosine_annealing_lr
+          eta_min_ratio: 0.02
+          num_workers: 8
+    
+    9: # num_clients
+      0.1: # p_miss_train
+          dataset: cifar10
+          model: resnet18
+          criterion: cross_entropy
+          num_epochs: 100
+          batch_size: 1024
+          optimizer: sgd
+          lr: 0.1
+          weight_decay: 0.01
+          momentum: 0.5
+          scheduler: cosine_annealing_lr
+          eta_min_ratio: 0.02
+          num_workers: 8
+    
+    10: # num_clients
+      0.1: # p_miss_train
+          dataset: cifar10
+          model: resnet18
+          criterion: cross_entropy
+          num_epochs: 100
+          batch_size: 1024
+          optimizer: sgd
+          lr: 0.1
+          weight_decay: 0.01
+          momentum: 0.5
+          scheduler: cosine_annealing_lr
+          eta_min_ratio: 0.02
+          num_workers: 8
+
+    4: # num_clients
+      0.0: # p_miss_train
+        dataset: cifar10
+        model: resnet18
+        criterion: cross_entropy
+        num_epochs: 100
+        batch_size: 1024
+        optimizer: sgd
+        lr: 0.1
+        weight_decay: 0.01
+        momentum: 0.5
+        scheduler: cosine_annealing_lr
+        eta_min_ratio: 0.02
+        num_workers: 8
+      
+      0.1: # p_miss_train
+        dataset: cifar10
+        model: resnet18
+        criterion: cross_entropy
+        num_epochs: 100
+        batch_size: 1024
+        optimizer: sgd
+        lr: 0.1
+        weight_decay: 0.01
+        momentum: 0.5
+        scheduler: cosine_annealing_lr
+        eta_min_ratio: 0.02
+        num_workers: 8
+      
+      0.5: # p_miss_train
+        dataset: cifar10
+        model: resnet18
+        criterion: cross_entropy
+        num_epochs: 100
+        batch_size: 1024
+        optimizer: sgd
+        lr: 0.1
+        weight_decay: 0.01
+        momentum: 0.5
+        scheduler: cosine_annealing_lr
+        eta_min_ratio: 0.02
+        num_workers: 8
+      
+      null: # p_miss_train
+        dataset: cifar10
+        model: resnet18
+        criterion: cross_entropy
+        num_epochs: 100
+        batch_size: 1024
+        optimizer: sgd
+        lr: 0.1
+        weight_decay: 0.01
+        momentum: 0.5
+        scheduler: cosine_annealing_lr
+        eta_min_ratio: 0.02
+        num_workers: 8
+
+  cifar100: # task
+      4: # num_clients
+        0.0: # p_miss_train
+          dataset: cifar100
+          model: resnet18
+          criterion: cross_entropy
+          num_epochs: 150
+          batch_size: 1024
+          optimizer: sgd
+          lr: 0.15
+          weight_decay: 0.004
+          momentum: 0.5
+          scheduler: cosine_annealing_lr
+          eta_min_ratio: 0.02
+          num_workers: 8
+        
+        0.1: # p_miss_train
+          dataset: cifar100
+          model: resnet18
+          criterion: cross_entropy
+          num_epochs: 150
+          batch_size: 1024
+          optimizer: sgd
+          lr: 0.15
+          weight_decay: 0.004
+          momentum: 0.5
+          scheduler: cosine_annealing_lr
+          eta_min_ratio: 0.02
+          num_workers: 8
+        
+        0.5: # p_miss_train
+          dataset: cifar100
+          model: resnet18
+          criterion: cross_entropy
+          num_epochs: 150
+          batch_size: 1024
+          optimizer: sgd
+          lr: 0.15
+          weight_decay: 0.004
+          momentum: 0.5
+          scheduler: cosine_annealing_lr
+          eta_min_ratio: 0.02
+          num_workers: 8
+  
+  mimic4: # task
+    4: # num_clients
+      0.0: # p_miss_train
+        dataset: mimic4
+        model: lstm
+        criterion: cross_entropy
+        num_epochs: 20 # CHANGE BACK TO 20
+        batch_size: 128
+        optimizer: adam
+        lr: 0.001
+        weight_decay: 0.0
+        momentum: n/a
+        scheduler: n/a
+        eta_min_ratio: n/a
+        num_workers: 2
+      
+      0.1: # p_miss_train
+        dataset: mimic4
+        model: lstm
+        criterion: cross_entropy
+        num_epochs: 20 # CHANGE BACK TO 20
+        batch_size: 128
+        optimizer: adam
+        lr: 0.001
+        weight_decay: 0.0
+        momentum: n/a
+        scheduler: n/a
+        eta_min_ratio: n/a
+        num_workers: 2
+      
+      0.5: # p_miss_train
+        dataset: mimic4
+        model: lstm
+        criterion: cross_entropy
+        num_epochs: 20 # CHANGE BACK TO 20
+        batch_size: 128
+        optimizer: adam
+        lr: 0.001
+        weight_decay: 0.0
+        momentum: n/a
+        scheduler: n/a
+        eta_min_ratio: n/a
+        num_workers: 2
+
+ensemble:
+  credit: # task
+    4: # num_clients
+      0.0: # p_miss_train
+        dataset: credit
+        model: mlp_small
+        criterion: cross_entropy
+        num_epochs: 50
+        batch_size: 128
+        optimizer: adam
+        lr: 0.0001
+        weight_decay: 0.001
+        momentum: n/a
+        scheduler: n/a
+        eta_min_ratio:  n/a
+        num_workers: 1
+
+      0.1: # p_miss_train
+        dataset: credit
+        model: mlp_small
+        criterion: cross_entropy
+        num_epochs: 50
+        batch_size: 128
+        optimizer: adam
+        lr: 0.0001
+        weight_decay: 0.001
+        momentum: n/a
+        scheduler: n/a
+        eta_min_ratio:  n/a
+        num_workers: 1
+      
+      0.5: # p_miss_train
+        dataset: credit
+        model: mlp_small
+        criterion: cross_entropy
+        num_epochs: 50
+        batch_size: 128
+        optimizer: adam
+        lr: 0.0001
+        weight_decay: 0.001
+        momentum: n/a
+        scheduler: n/a
+        eta_min_ratio:  n/a
+        num_workers: 1
+
+  cifar10: # task
+    2: # num_clients
+      0.1: # p_miss_train
+        dataset: cifar10
+        model: resnet18
+        criterion: cross_entropy
+        num_epochs: 100
+        batch_size: 1024
+        optimizer: sgd
+        lr: 0.1
+        weight_decay: 0.01
+        momentum: 0.5
+        scheduler: cosine_annealing_lr
+        eta_min_ratio: 0.02
+        num_workers: 8
+    
+    3: # num_clients
+      0.1: # p_miss_train
+        dataset: cifar10
+        model: resnet18
+        criterion: cross_entropy
+        num_epochs: 100
+        batch_size: 1024
+        optimizer: sgd
+        lr: 0.1
+        weight_decay: 0.01
+        momentum: 0.5
+        scheduler: cosine_annealing_lr
+        eta_min_ratio: 0.02
+        num_workers: 8
+    
+    5: # num_clients
+      0.1: # p_miss_train
+        dataset: cifar10
+        model: resnet18
+        criterion: cross_entropy
+        num_epochs: 100
+        batch_size: 1024
+        optimizer: sgd
+        lr: 0.1
+        weight_decay: 0.01
+        momentum: 0.5
+        scheduler: cosine_annealing_lr
+        eta_min_ratio: 0.02
+        num_workers: 8
+    
+    6: # num_clients
+      0.1: # p_miss_train
+        dataset: cifar10
+        model: resnet18
+        criterion: cross_entropy
+        num_epochs: 100
+        batch_size: 1024
+        optimizer: sgd
+        lr: 0.1
+        weight_decay: 0.01
+        momentum: 0.5
+        scheduler: cosine_annealing_lr
+        eta_min_ratio: 0.02
+        num_workers: 8
+    
+    7: # num_clients
+      0.1: # p_miss_train
+        dataset: cifar10
+        model: resnet18
+        criterion: cross_entropy
+        num_epochs: 100
+        batch_size: 1024
+        optimizer: sgd
+        lr: 0.1
+        weight_decay: 0.01
+        momentum: 0.5
+        scheduler: cosine_annealing_lr
+        eta_min_ratio: 0.02
+        num_workers: 8
+    
+    8: # num_clients
+      0.1: # p_miss_train
+        dataset: cifar10
+        model: resnet18
+        criterion: cross_entropy
+        num_epochs: 100
+        batch_size: 1024
+        optimizer: sgd
+        lr: 0.1
+        weight_decay: 0.01
+        momentum: 0.5
+        scheduler: cosine_annealing_lr
+        eta_min_ratio: 0.02
+        num_workers: 8
+    
+    9: # num_clients
+      0.1: # p_miss_train
+        dataset: cifar10
+        model: resnet18
+        criterion: cross_entropy
+        num_epochs: 100
+        batch_size: 1024
+        optimizer: sgd
+        lr: 0.1
+        weight_decay: 0.01
+        momentum: 0.5
+        scheduler: cosine_annealing_lr
+        eta_min_ratio: 0.02
+        num_workers: 8
+    
+    10: # num_clients
+      0.1: # p_miss_train
+        dataset: cifar10
+        model: resnet18
+        criterion: cross_entropy
+        num_epochs: 100
+        batch_size: 1024
+        optimizer: sgd
+        lr: 0.1
+        weight_decay: 0.01
+        momentum: 0.5
+        scheduler: cosine_annealing_lr
+        eta_min_ratio: 0.02
+        num_workers: 8
+
+    4: # num_clients
+      0.0: # p_miss_train
+        dataset: cifar10
+        model: resnet18
+        criterion: cross_entropy
+        num_epochs: 100
+        batch_size: 1024
+        optimizer: sgd
+        lr: 0.1
+        weight_decay: 0.01
+        momentum: 0.5
+        scheduler: cosine_annealing_lr
+        eta_min_ratio: 0.02
+        num_workers: 8
+      
+      0.1: # p_miss_train
+        dataset: cifar10
+        model: resnet18
+        criterion: cross_entropy
+        num_epochs: 100
+        batch_size: 1024
+        optimizer: sgd
+        lr: 0.1
+        weight_decay: 0.01
+        momentum: 0.5
+        scheduler: cosine_annealing_lr
+        eta_min_ratio: 0.02
+        num_workers: 8
+      
+      0.5: # p_miss_train
+        dataset: cifar10
+        model: resnet18
+        criterion: cross_entropy
+        num_epochs: 100
+        batch_size: 1024
+        optimizer: sgd
+        lr: 0.1
+        weight_decay: 0.01
+        momentum: 0.5
+        scheduler: cosine_annealing_lr
+        eta_min_ratio: 0.02
+        num_workers: 8
+      
+      null: # p_miss_train
+        dataset: cifar10
+        model: resnet18
+        criterion: cross_entropy
+        num_epochs: 100
+        batch_size: 1024
+        optimizer: sgd
+        lr: 0.1
+        weight_decay: 0.01
+        momentum: 0.5
+        scheduler: cosine_annealing_lr
+        eta_min_ratio: 0.02
+        num_workers: 8
+
+  cifar100: # task
+      4: # num_clients
+        0.0: # p_miss_train
+          dataset: cifar100
+          model: resnet18
+          criterion: cross_entropy
+          num_epochs: 150
+          batch_size: 1024
+          optimizer: sgd
+          lr: 0.15
+          weight_decay: 0.004
+          momentum: 0.5
+          scheduler: cosine_annealing_lr
+          eta_min_ratio: 0.02
+          num_workers: 8
+        
+        0.1: # p_miss_train
+          dataset: cifar100
+          model: resnet18
+          criterion: cross_entropy
+          num_epochs: 150
+          batch_size: 1024
+          optimizer: sgd
+          lr: 0.15
+          weight_decay: 0.004
+          momentum: 0.5
+          scheduler: cosine_annealing_lr
+          eta_min_ratio: 0.02
+          num_workers: 8
+        
+        0.5: # p_miss_train
+          dataset: cifar100
+          model: resnet18
+          criterion: cross_entropy
+          num_epochs: 150
+          batch_size: 1024
+          optimizer: sgd
+          lr: 0.15
+          weight_decay: 0.004
+          momentum: 0.5
+          scheduler: cosine_annealing_lr
+          eta_min_ratio: 0.02
+          num_workers: 8
+
+  mimic4: # task
+      4: # num_clients
+        0.0: # p_miss_train
+          dataset: mimic4
+          model: lstm
+          criterion: cross_entropy
+          num_epochs: 20 # CHANGE BACK TO 20
+          batch_size: 128
+          optimizer: adam
+          lr: 0.001
+          weight_decay: 0.0
+          momentum: n/a
+          scheduler: n/a
+          eta_min_ratio: n/a
+          num_workers: 2
+        
+        0.1: # p_miss_train
+          dataset: mimic4
+          model: lstm
+          criterion: cross_entropy
+          num_epochs: 20 # CHANGE BACK TO 20
+          batch_size: 128
+          optimizer: adam
+          lr: 0.001
+          weight_decay: 0.0
+          momentum: n/a
+          scheduler: n/a
+          eta_min_ratio: n/a
+          num_workers: 2
+        
+        0.5: # p_miss_train
+          dataset: mimic4
+          model: lstm
+          criterion: cross_entropy
+          num_epochs: 20 # CHANGE BACK TO 20
+          batch_size: 128
+          optimizer: adam
+          lr: 0.001
+          weight_decay: 0.0
+          momentum: n/a
+          scheduler: n/a
+          eta_min_ratio: n/a
+          num_workers: 2
+
+  hapt: # task
+    4: # num_clients
+      0.0: # p_miss_train
+        dataset: hapt
+        model: mlp
+        criterion: cross_entropy
+        num_epochs: 100
+        batch_size: 128
+        optimizer: sgd
+        lr: 0.05
+        weight_decay: 0.0001
+        momentum: 0.8
+        scheduler: n/a
+        eta_min_ratio:  n/a
+        num_workers: 1
+      
+      0.1: # p_miss_train
+        dataset: hapt
+        model: mlp
+        criterion: cross_entropy
+        num_epochs: 100 # tune
+        batch_size: 128 # tune
+        optimizer: sgd
+        lr: 0.05 # tune
+        weight_decay: 0.0001 # was 0.01 # tune
+        momentum: 0.8
+        scheduler: n/a
+        eta_min_ratio:  n/a
+        num_workers: 1 # tune
+      
+      0.5: # p_miss_train
+        dataset: hapt
+        model: mlp
+        criterion: cross_entropy
+        num_epochs: 100 # tune
+        batch_size: 128 # tune
+        optimizer: sgd
+        lr: 0.05 # tune
+        weight_decay: 0.0001 # was 0.01 # tune
+        momentum: 0.8
+        scheduler: n/a
+        eta_min_ratio:  n/a
+        num_workers: 1 # tune
+
+plug:
+  hapt: # task
+    4: # num_clients
+      0.0: # p_miss_train
+        dataset: hapt
+        model: mlp
+        criterion: cross_entropy
+        num_epochs: 100
+        batch_size: 128
+        optimizer: sgd
+        lr: 0.05
+        weight_decay: 0.0001
+        momentum: 0.8
+        scheduler: n/a
+        eta_min_ratio:  n/a
+        num_workers: 1
+      
+      0.1: # p_miss_train
+        dataset: hapt
+        model: mlp
+        criterion: cross_entropy
+        num_epochs: 100 # tune
+        batch_size: 128 # tune
+        optimizer: sgd
+        lr: 0.05 # tune
+        weight_decay: 0.0001 # was 0.01 # tune
+        momentum: 0.8
+        scheduler: n/a
+        eta_min_ratio:  n/a
+        num_workers: 1 # tune
+      
+      0.5: # p_miss_train
+        dataset: hapt
+        model: mlp
+        criterion: cross_entropy
+        num_epochs: 100 # tune
+        batch_size: 128 # tune
+        optimizer: sgd
+        lr: 0.05 # tune
+        weight_decay: 0.0001 # was 0.01 # tune
+        momentum: 0.8
+        scheduler: n/a
+        eta_min_ratio:  n/a
+        num_workers: 1 # tune
+
+  cifar10: # task
+    2: # num_clients
+      0.1: # p_miss_train
+        dataset: cifar10
+        model: resnet18
+        criterion: cross_entropy
+        num_epochs: 100
+        batch_size: 1024
+        optimizer: sgd
+        lr: 0.1
+        weight_decay: 0.008
+        momentum: 0.5
+        scheduler: cosine_annealing_lr
+        eta_min_ratio: 0.02
+        num_workers: 8
+    
+    3: # num_clients
+      0.1: # p_miss_train
+        dataset: cifar10
+        model: resnet18
+        criterion: cross_entropy
+        num_epochs: 100
+        batch_size: 1024
+        optimizer: sgd
+        lr: 0.1
+        weight_decay: 0.008
+        momentum: 0.5
+        scheduler: cosine_annealing_lr
+        eta_min_ratio: 0.02
+        num_workers: 8
+    
+    5: # num_clients
+      0.1: # p_miss_train
+        dataset: cifar10
+        model: resnet18
+        criterion: cross_entropy
+        num_epochs: 100
+        batch_size: 1024
+        optimizer: sgd
+        lr: 0.1
+        weight_decay: 0.008
+        momentum: 0.5
+        scheduler: cosine_annealing_lr
+        eta_min_ratio: 0.02
+        num_workers: 8
+    
+    6: # num_clients
+      0.1: # p_miss_train
+        dataset: cifar10
+        model: resnet18
+        criterion: cross_entropy
+        num_epochs: 100
+        batch_size: 1024
+        optimizer: sgd
+        lr: 0.1
+        weight_decay: 0.008
+        momentum: 0.5
+        scheduler: cosine_annealing_lr
+        eta_min_ratio: 0.02
+        num_workers: 8
+    
+    7: # num_clients
+      0.1: # p_miss_train
+        dataset: cifar10
+        model: resnet18
+        criterion: cross_entropy
+        num_epochs: 100
+        batch_size: 1024
+        optimizer: sgd
+        lr: 0.1
+        weight_decay: 0.008
+        momentum: 0.5
+        scheduler: cosine_annealing_lr
+        eta_min_ratio: 0.02
+        num_workers: 8
+    
+    8: # num_clients
+      0.1: # p_miss_train
+        dataset: cifar10
+        model: resnet18
+        criterion: cross_entropy
+        num_epochs: 100
+        batch_size: 1024
+        optimizer: sgd
+        lr: 0.1
+        weight_decay: 0.008
+        momentum: 0.5
+        scheduler: cosine_annealing_lr
+        eta_min_ratio: 0.02
+        num_workers: 8
+
+    4: # num_clients
+      0.0: # p_miss_train
+        dataset: cifar10
+        model: resnet18
+        criterion: cross_entropy
+        num_epochs: 100
+        batch_size: 1024
+        optimizer: sgd
+        lr: 0.1
+        weight_decay: 0.008
+        momentum: 0.5
+        scheduler: cosine_annealing_lr
+        eta_min_ratio: 0.02
+        num_workers: 8
+      
+      0.1: # p_miss_train
+        dataset: cifar10
+        model: resnet18
+        criterion: cross_entropy
+        num_epochs: 100
+        batch_size: 1024
+        optimizer: sgd
+        lr: 0.1
+        weight_decay: 0.008
+        momentum: 0.5
+        scheduler: cosine_annealing_lr
+        eta_min_ratio: 0.02
+        num_workers: 8
+      
+      0.5: # p_miss_train
+        dataset: cifar10
+        model: resnet18
+        criterion: cross_entropy
+        num_epochs: 100
+        batch_size: 1024
+        optimizer: sgd
+        lr: 0.1
+        weight_decay: 0.008
+        momentum: 0.5
+        scheduler: cosine_annealing_lr
+        eta_min_ratio: 0.02
+        num_workers: 8
+      
+      null: # p_miss_train
+        dataset: cifar10
+        model: resnet18
+        criterion: cross_entropy
+        num_epochs: 100
+        batch_size: 1024
+        optimizer: sgd
+        lr: 0.1
+        weight_decay: 0.008
+        momentum: 0.5
+        scheduler: cosine_annealing_lr
+        eta_min_ratio: 0.02
+        num_workers: 8
+
+  cifar100: # task
+    4: # num_clients
+      0.0: # p_miss_train
+        dataset: cifar100
+        model: resnet18
+        criterion: cross_entropy
+        num_epochs: 150
+        batch_size: 1024
+        optimizer: sgd
+        lr: 0.15
+        weight_decay: 0.004
+        momentum: 0.5
+        scheduler: cosine_annealing_lr
+        eta_min_ratio: 0.02
+        num_workers: 8
+      
+      0.1: # p_miss_train
+        dataset: cifar100
+        model: resnet18
+        criterion: cross_entropy
+        num_epochs: 150
+        batch_size: 1024
+        optimizer: sgd
+        lr: 0.15
+        weight_decay: 0.004
+        momentum: 0.5
+        scheduler: cosine_annealing_lr
+        eta_min_ratio: 0.02
+        num_workers: 8
+      
+      0.5: # p_miss_train
+        dataset: cifar100
+        model: resnet18
+        criterion: cross_entropy
+        num_epochs: 150
+        batch_size: 1024
+        optimizer: sgd
+        lr: 0.15
+        weight_decay: 0.004
+        momentum: 0.5
+        scheduler: cosine_annealing_lr
+        eta_min_ratio: 0.02
+        num_workers: 8
+
+  credit: # task
+    4: # num_clients
+      0.0: # p_miss_train
+        dataset: credit
+        model: mlp_small
+        criterion: cross_entropy
+        num_epochs: 75 # was 50 for local
+        batch_size: 128
+        optimizer: adam
+        lr: 0.0001
+        weight_decay: 0.0001
+        momentum: n/a
+        scheduler: n/a
+        eta_min_ratio:  n/a
+        num_workers: 1
+
+      0.1: # p_miss_train
+        dataset: credit
+        model: mlp_small
+        criterion: cross_entropy
+        num_epochs: 75 # was 50 for local
+        batch_size: 128
+        optimizer: adam
+        lr: 0.0001
+        weight_decay: 0.0001
+        momentum: n/a
+        scheduler: n/a
+        eta_min_ratio:  n/a
+        num_workers: 1
+      
+      0.5: # p_miss_train
+        dataset: credit
+        model: mlp_small
+        criterion: cross_entropy
+        num_epochs: 75 # was 50 for local
+        batch_size: 128
+        optimizer: adam
+        lr: 0.0001
+        weight_decay: 0.0001
+        momentum: n/a
+        scheduler: n/a
+        eta_min_ratio:  n/a
+        num_workers: 1
+
+  mimic4: # task
+    4: # num_clients
+      0.0: # p_miss_train
+        dataset: mimic4
+        model: lstm
+        criterion: cross_entropy
+        num_epochs: 20 # CHANGE BACK TO 20
+        batch_size: 128
+        optimizer: adam
+        lr: 0.001
+        weight_decay: 0.0
+        momentum: n/a
+        scheduler: n/a
+        eta_min_ratio: n/a
+        num_workers: 2
+      
+      0.1: # p_miss_train
+        dataset: mimic4
+        model: lstm
+        criterion: cross_entropy
+        num_epochs: 20 # CHANGE BACK TO 20
+        batch_size: 128
+        optimizer: adam
+        lr: 0.001
+        weight_decay: 0.0
+        momentum: n/a
+        scheduler: n/a
+        eta_min_ratio: n/a
+        num_workers: 2
+      
+      0.5: # p_miss_train
+        dataset: mimic4
+        model: lstm
+        criterion: cross_entropy
+        num_epochs: 20 # CHANGE BACK TO 20
+        batch_size: 128
+        optimizer: adam
+        lr: 0.001
+        weight_decay: 0.0
+        momentum: n/a
+        scheduler: n/a
+        eta_min_ratio: n/a
+        num_workers: 2
