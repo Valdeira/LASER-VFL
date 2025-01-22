@@ -3,8 +3,7 @@ import wandb
 import torch
 
 from utils import (time_decorator, print_exp_info, init_wandb, setup_task,
-                    set_seed, check_sets_of_clients_valid,
-                    get_metrics)
+                    set_seed, check_sets_of_clients_valid, get_metrics)
 from data.data_utils import get_dataloaders
 
 
