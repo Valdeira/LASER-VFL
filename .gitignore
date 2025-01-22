@@ -134,7 +134,7 @@ experiments/__pycache__/
 models/__pycache__/
 wandb/
 legacy/
-results/
+results/plots/
 run_multiple.py
 # Ignore everything in the data/ folder
 data/*
@@ -147,7 +147,7 @@ __pycache__/
 !data/custom_dataset.py
 !data/data_utils.py
 
-# Don't ignore the MIMIC-IV-Data-Pipeline directory itself
+# Don't ignore the MIMIC-IV-Data-Pipeline directory itself (missing "!"?)
 data/MIMIC-IV-Data-Pipeline/
 
 # Ignore specific subdirectories inside MIMIC-IV-Data-Pipeline
