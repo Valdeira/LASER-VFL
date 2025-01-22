@@ -60,7 +60,6 @@ def time_decorator(func, *args, **kwargs):
 
 
 def powerset_except_empty(n):
-    """Returns the list of all non-empty subsets of range(n)."""
     return list(chain.from_iterable(combinations(range(n), r) for r in range(1, n + 1)))
 
 
@@ -89,6 +88,7 @@ def setup_task(args):
     train, test = getattr(mod, train_name), getattr(mod, test_name)
 
     return config, model, optimizer, scheduler, criterion, train, test
+
 
 def check_sets_of_clients_valid(args):
     if args.blocks_in_tasks_t is not None:
