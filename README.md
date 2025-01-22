@@ -26,10 +26,9 @@ conda activate vfl
 To run an experiment, simply run main.py with the appropriate arguments. For example:
 
 ```bash
-python main.py --task_name cifar10 --cuda_id 0 --num_clients 4 --method laser --wandb_name rvfl_cifar10_s0 --seed 0
+python main.py --task_name cifar10 --cuda_id 0 --num_clients 4 --method laser --seed 0
 ```
 
-Note that, in the code "laser" and "rvfl" refer to our LASER-VFL method.
 Local, Standard VFL, and Combinatorial are all special instances of
 "decoupled" with and appropriate "--blocks_in_tasks_t" argument.
 
