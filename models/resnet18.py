@@ -1,15 +1,13 @@
-import random
-
 import torch
 import torch.nn as nn
 import torchvision.models
 from torchvision.models.resnet import BasicBlock
 
-from utils import powerset_except_empty
-from models.model_utils import FusionModel, drop_mask, task_to_hyperparameters
+from models.model_utils import (FusionModel, BaseLaserModel, BaseDecoupledModel,
+                                drop_mask, task_to_hyperparameters)
 
 
-class FeatureExtractor(nn.Module):
+class Resnet18FeatureExtractor(nn.Module):
     
     def __init__(self, cut_dim, dataset):
         super().__init__()
@@ -41,70 +39,37 @@ class FeatureExtractor(nn.Module):
         return self.resnet18(x)
 
 
-class LaserModel(nn.Module):
+class Resnet18LaserModel(BaseLaserModel):
     
     def __init__(self, dataset, num_clients):
-        super().__init__()
-        self.num_clients = num_clients
-        self.powerset = powerset_except_empty(self.num_clients)
         num_classes, _, cut_dim, _ = task_to_hyperparameters(dataset)
+        feature_extractors = nn.ModuleList([Resnet18FeatureExtractor(cut_dim, dataset) for _ in range(num_clients)])
+        fusion_models = nn.ModuleList([FusionModel(cut_dim, num_classes) for _ in range(num_clients)])
         self.dataset = dataset
-
         self.map_idx_to_partition = get_idx_to_partition_map(dataset, num_clients)
-        
-        self.feature_extractors = nn.ModuleList([FeatureExtractor(cut_dim, dataset) for _ in range(self.num_clients)])
-        self.fusion_models = nn.ModuleList([FusionModel(cut_dim, num_classes) for _ in range(self.num_clients)])
-
-    def forward(self, x, training=True, observed_blocks=None):
-
-        if observed_blocks is None: # NOTE this is be the case e.g. for test data
-            observed_blocks = list(range(self.num_clients))
-        
-        embeddings = {}
-        for i in observed_blocks:
-            local_input = self.get_block(x, i)
-            embeddings[i] = self.feature_extractors[i](local_input)
-
-        if training:
-            outputs = []
-            for i, fusion_model in enumerate(self.fusion_models):
-                if i not in observed_blocks:
-                    continue
-                sets_considered_by_head = [clients_l for clients_l in self.powerset if i in clients_l and set(clients_l).issubset(set(observed_blocks))]
-                head_output = {}
-                for num_clients_in_agg in range(1, len(observed_blocks) + 1):
-                    set_to_sample = [client_set for client_set in sets_considered_by_head if len(client_set) == num_clients_in_agg]
-                    [sample] = random.sample(set_to_sample, 1)
-                    head_output[sample] = fusion_model([embeddings[j] for j in sample])
-                outputs.append(head_output)
-        else:
-            outputs = [{clients_l: fusion_model([embeddings[j] for j in clients_l]) for clients_l in self.powerset if i in clients_l} for i, fusion_model in enumerate(self.fusion_models)]
-
-        return outputs
+        super().__init__(feature_extractors, fusion_models, num_clients)
     
     def get_block(self, x, i):
         [x_] = x
         row_indices, col_indices = self.map_idx_to_partition[i]
         start_row, end_row = row_indices
         start_col, end_col = col_indices
-        
         return x_[:, :, start_row:end_row, start_col:end_col]
 
 
-class DecoupledModel(nn.Module):
-
-    def __init__(self, dataset, args, clients_in_model=None, aggregation="mean"):
-        super().__init__()
-        self.num_clients = args.num_clients
+class Resnet18DecoupledModel(BaseDecoupledModel):
+    def __init__(self, dataset, args, clients_in_model=None, aggregation="mean"): # TODO replace args with num_clients directly
+        num_clients = args.num_clients
+        self.num_clients = num_clients
         num_classes, _, cut_dim, _ = task_to_hyperparameters(dataset)
-
-        self.map_idx_to_partition = get_idx_to_partition_map(dataset, args.num_clients)
+        self.map_idx_to_partition = get_idx_to_partition_map(dataset, num_clients)
 
         # Assign the clients involved in the model (feature extractors used in this head), defaulting to all clients if none specified
         self.clients_in_model = clients_in_model if clients_in_model is not None else list(range(args.num_clients))
 
-        self.feature_extractors = nn.ModuleList([FeatureExtractor(cut_dim, dataset) for _ in self.clients_in_model])
-        self.fusion_model = FusionModel(cut_dim, num_classes, aggregation, args.num_clients)
+        feature_extractors = nn.ModuleList([Resnet18FeatureExtractor(cut_dim, dataset) for _ in self.clients_in_model])
+        fusion_model = FusionModel(cut_dim, num_classes, aggregation, args.num_clients)
+        super().__init__(feature_extractors, fusion_model, num_clients)
 
     def get_block(self, x, i):
         [x_] = x        
@@ -113,29 +78,6 @@ class DecoupledModel(nn.Module):
         start_col, end_col = col_indices
         return x_[:, :, start_row:end_row, start_col:end_col]
     
-    def forward(self, x, plug_mask=None, p_drop=0):
-        
-        if plug_mask is not None: # for PlugVFL we use mask in the forward pass
-            """
-            missing feature blocks are always zeros at the fusion model;
-            during training, p_drop>0 is provided and the observed feature blocks
-            can also  be dropped, leading to zeros at the fusion model w.p. p_drop in (0,0.5)
-            """
-            new_mask = drop_mask(plug_mask, p_drop)
-            embeddings = [
-                self.feature_extractors[i](self.get_block(x, j)) if new_mask[i] else 
-                torch.zeros_like(self._get_dummy_output(self.feature_extractors[i], self.get_block(x, j)))
-                for i, j in enumerate(self.clients_in_model)
-            ]
-            return self.fusion_model(embeddings)
-        else:
-            embeddings = [self.feature_extractors[i](self.get_block(x, j)) for i, j in enumerate(self.clients_in_model)]
-            return self.fusion_model(embeddings)
-    
-    def _get_dummy_output(self, feature_extractor, input_tensor):
-        with torch.no_grad():
-            return feature_extractor(input_tensor)
-
 
 def get_idx_to_partition_map(dataset: str, num_clients: int) -> dict:
     if dataset in ["cifar10", "cifar100"] and num_clients == 10:

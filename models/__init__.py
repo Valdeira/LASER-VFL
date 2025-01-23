@@ -1,34 +1,34 @@
-from .resnet18 import LaserModel as LaserResnet
-from .resnet18 import DecoupledModel as DecoupledResnet
-from .lstm import DecoupledModel as DecoupledLstm
-from .lstm import LaserModel as LaserLstm
-from .mlp import DecoupledModel as DecoupledMLP
-from .mlp import LaserModel as LaserMLP
+from models.resnet18 import Resnet18LaserModel
+from models.resnet18 import Resnet18DecoupledModel
+from models.lstm import DecoupledModel as DecoupledLstm
+from models.lstm import LaserModel as LaserLstm
+from models.mlp import MLPDecoupledModel
+from models.mlp import MLPLaserModel
 
 
 models_dict = {
                 "laser": {
-                        "resnet18": LaserResnet,
+                        "resnet18": Resnet18LaserModel,
                         "lstm": LaserLstm,
-                        "mlp": LaserMLP,
+                        "mlp": MLPLaserModel,
                         },
                 "decoupled":
                         {
-                        "resnet18": DecoupledResnet,
+                        "resnet18": Resnet18DecoupledModel,
                         "lstm": DecoupledLstm,
-                        "mlp": DecoupledMLP,
+                        "mlp": MLPDecoupledModel,
                         },
                 "plug":
                         {
-                        "resnet18": DecoupledResnet,
+                        "resnet18": Resnet18DecoupledModel,
                         "lstm": DecoupledLstm,
-                        "mlp": DecoupledMLP,
+                        "mlp": MLPDecoupledModel,
                         },
                 "ensemble":
                         {
-                        "resnet18": DecoupledResnet,
+                        "resnet18": Resnet18DecoupledModel,
                         "lstm": DecoupledLstm,
-                        "mlp": DecoupledMLP,
+                        "mlp": MLPDecoupledModel,
                         },
                 }
 
