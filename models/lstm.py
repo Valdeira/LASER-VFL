@@ -4,6 +4,7 @@ from torch import nn
 from torch.autograd import *
 
 from utils import powerset_except_empty
+from models.model_utils import drop_mask
 
 
 class FeatureExtractor(nn.Module):
@@ -363,19 +364,3 @@ def split_into_chunks(lst, K):
         start += chunk_size
     
     return chunks
-
-def drop_mask(plug_mask: torch.Tensor, p_drop: float) -> torch.Tensor:
-    """
-    Generate a new mask based on plug_mask and a dropout probability, ensuring the first entry is not dropped.
-
-    Args:
-    plug_mask (torch.Tensor): A 1D boolean tensor.
-    p_drop (float): Probability of dropping an entry.
-
-    Returns:
-    torch.Tensor: A new 1D boolean tensor of the same shape as plug_mask.
-    """
-    random_probs = torch.rand_like(plug_mask, dtype=torch.float32)
-    new_mask = plug_mask & (random_probs >= p_drop)
-    new_mask[-1] = plug_mask[-1]  # the active party is not dropped
-    return new_mask
