@@ -3,7 +3,7 @@ laser:
     4: # num_clients
       0.0: # p_miss_train
         dataset: credit
-        model: mlp_small
+        model: mlp
         criterion: cross_entropy
         num_epochs: 100
         batch_size: 128
@@ -17,7 +17,7 @@ laser:
 
       0.1: # p_miss_train
         dataset: credit
-        model: mlp_small
+        model: mlp
         criterion: cross_entropy
         num_epochs: 100
         batch_size: 128
@@ -31,7 +31,7 @@ laser:
       
       0.5: # p_miss_train
         dataset: credit
-        model: mlp_small
+        model: mlp
         criterion: cross_entropy
         num_epochs: 125
         batch_size: 128
@@ -359,7 +359,7 @@ decoupled:
     4: # num_clients
       0.0: # p_miss_train
         dataset: credit
-        model: mlp_small
+        model: mlp
         criterion: cross_entropy
         num_epochs: 75 # was 50 for local
         batch_size: 128
@@ -373,7 +373,7 @@ decoupled:
 
       0.1: # p_miss_train
         dataset: credit
-        model: mlp_small
+        model: mlp
         criterion: cross_entropy
         num_epochs: 75 # was 50 for local
         batch_size: 128
@@ -387,7 +387,7 @@ decoupled:
       
       0.5: # p_miss_train
         dataset: credit
-        model: mlp_small
+        model: mlp
         criterion: cross_entropy
         num_epochs: 75 # was 50 for local
         batch_size: 128
@@ -714,7 +714,7 @@ ensemble:
     4: # num_clients
       0.0: # p_miss_train
         dataset: credit
-        model: mlp_small
+        model: mlp
         criterion: cross_entropy
         num_epochs: 50
         batch_size: 128
@@ -728,7 +728,7 @@ ensemble:
 
       0.1: # p_miss_train
         dataset: credit
-        model: mlp_small
+        model: mlp
         criterion: cross_entropy
         num_epochs: 50
         batch_size: 128
@@ -742,7 +742,7 @@ ensemble:
       
       0.5: # p_miss_train
         dataset: credit
-        model: mlp_small
+        model: mlp
         criterion: cross_entropy
         num_epochs: 50
         batch_size: 128
@@ -1305,7 +1305,7 @@ plug:
     4: # num_clients
       0.0: # p_miss_train
         dataset: credit
-        model: mlp_small
+        model: mlp
         criterion: cross_entropy
         num_epochs: 75 # was 50 for local
         batch_size: 128
@@ -1319,7 +1319,7 @@ plug:
 
       0.1: # p_miss_train
         dataset: credit
-        model: mlp_small
+        model: mlp
         criterion: cross_entropy
         num_epochs: 75 # was 50 for local
         batch_size: 128
@@ -1333,7 +1333,7 @@ plug:
       
       0.5: # p_miss_train
         dataset: credit
-        model: mlp_small
+        model: mlp
         criterion: cross_entropy
         num_epochs: 75 # was 50 for local
         batch_size: 128
