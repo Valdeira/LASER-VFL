@@ -1,8 +1,7 @@
-import torch
 import torch.nn as nn
 
-from models.model_utils import (FusionModel, BaseLaserModel, BaseDecoupledModel,
-                                drop_mask, task_to_hyperparameters)
+from models.model_utils import (BaseLaserModel, BaseDecoupledModel,
+                                FusionModel, task_to_hyperparameters)
 
 
 class MLPFeatureExtractor(nn.Module):
@@ -29,11 +28,7 @@ class MLPLaserModel(BaseLaserModel):
         super().__init__(feature_extractors, fusion_models, num_clients)
     
     def get_block(self, x, i):
-        [x_] = x
-        block_size = x_.shape[1] // self.num_clients
-        start = i * block_size
-        end = start + block_size
-        return x_[:, start:end]
+        return get_block_from_input(x, i, self.num_clients)
 
 
 class MLPDecoupledModel(BaseDecoupledModel):
@@ -50,9 +45,10 @@ class MLPDecoupledModel(BaseDecoupledModel):
         super().__init__(feature_extractors, fusion_model, num_clients)
 
     def get_block(self, x, i):
-        [x_] = x
-        block_size = x_.shape[1] // self.num_clients
-        start = i * block_size
-        end = start + block_size
-        return x_[:, start:end]
-    
+        return get_block_from_input(x, i, self.num_clients)
+
+
+def get_block_from_input(x, i, num_clients):
+    x_ = x[0]
+    block_size = x_.shape[1] // num_clients
+    return x_[:, i * block_size : (i + 1) * block_size]

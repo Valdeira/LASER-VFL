@@ -146,6 +146,7 @@ __pycache__/
 # But don't ignore custom_dataset.py
 !data/custom_dataset.py
 !data/data_utils.py
+!data/cifar_partitions.py
 
 # Don't ignore the MIMIC-IV-Data-Pipeline directory itself (missing "!"?)
 data/MIMIC-IV-Data-Pipeline/
