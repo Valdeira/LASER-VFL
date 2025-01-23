@@ -52,7 +52,7 @@ def get_dataloaders(args, config, p_miss_test=0.0):
         return train_ld, test_ld
 
     else:
-        ds_map = {'mnist': datasets.MNIST, 'cifar10': datasets.CIFAR10, 'cifar100': datasets.CIFAR100}
+        ds_map = {'cifar10': datasets.CIFAR10, 'cifar100': datasets.CIFAR100}
         if dataset not in ds_map:
             raise ValueError(f"Unknown dataset '{dataset}'.")
         ds_class = ds_map[dataset]
@@ -88,9 +88,6 @@ def get_image_transforms(dataset_name):
                                    transforms.RandomHorizontalFlip(),
                                    transforms.ToTensor(), 
                                    norm])
-    elif dataset_name == 'mnist':
-        return transforms.Compose([transforms.ToTensor(),
-                                   transforms.Normalize((0.1307,), (0.3081,))])
     else:
         raise ValueError(f"No transforms defined for '{dataset_name}'.")
 
