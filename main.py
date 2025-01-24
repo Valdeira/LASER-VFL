@@ -3,15 +3,15 @@ import wandb
 import torch
 
 from utils import (time_decorator, print_exp_info, init_wandb, setup_task,
-                    set_seed, check_sets_of_clients_valid, get_metrics)
+                    set_seed, process_method, get_metrics)
 from data.data_utils import get_dataloaders
 
 
 @time_decorator
 def main(args: argparse.Namespace) -> None:
-    
+
     set_seed(args.seed)
-    check_sets_of_clients_valid(args)
+    process_method(args)
     config, models, optimizers, schedulers, criterion, train, test = setup_task(args)
     train_loader, test_loader = get_dataloaders(args, config)
     if args.use_wandb:
@@ -58,18 +58,19 @@ if __name__ == '__main__':
     parser.add_argument('--task_name', choices=['hapt', 'credit', 'mimic4', 'cifar10', 'cifar100'])
     parser.add_argument('--cuda_id', type=int, default=0)
     parser.add_argument('--wandb_name', help='Name of the run.')
-    parser.add_argument('--seed', type=int, default=0)
+    parser.add_argument('--seeds', type=int, nargs='+', default=[0], help='E.g. "--seed 0 1 2")')
     parser.add_argument('--num_clients', type=int, default=4)
     parser.add_argument('--p_miss_train', type=float, default=0.0)
     parser.add_argument('--final_p_miss_test_l', type=lambda x: None if x == "None" else float(x), nargs='*',
                         default=[0.0, 0.1, 0.5, None], help="List of missing probabilities for testing.")
     parser.add_argument('--no_wandb', action='store_false', dest='use_wandb', help='Disable wandb logging.')
-    parser.add_argument('--method', choices=['decoupled', 'ensemble', 'plug', 'laser'], required=True)
-    parser.add_argument('--blocks_in_tasks_t', type=str, help='Tuple of sets of blocks/clients in tasks.')
+    parser.add_argument('--method', choices=['local', 'svfl', 'ensemble', 'combinatorial', 'plug', 'laser'], required=True)
     parser.add_argument('--p_drop', type=float, default=0.0)
+    
     args = parser.parse_args()
-
-    args.project = 'vfl-sandbox'
+    args.project = 'laser-vfl'
     args.device = torch.device(f'cuda:{args.cuda_id}' if torch.cuda.is_available() else 'cpu')
 
-    main(args)
+    for seed in args.seeds:
+        args.seed = seed
+        main(args)

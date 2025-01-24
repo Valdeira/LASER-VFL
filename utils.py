@@ -70,36 +70,36 @@ def setup_task(args):
     from schedulers import get_scheduler
 
     with open("configs/task_config.yaml") as file:
-        config = yaml.safe_load(file)[args.method][args.task_name][args.num_clients][args.p_miss_train]
+        config = yaml.safe_load(file)[args.method_type][args.task_name][args.num_clients][args.p_miss_train]
 
-    model = get_model(args.method, config["model"], config["dataset"], args, config)
-    optimizer = get_optimizer(args.method, config["optimizer"], model, config)
-    scheduler = get_scheduler(args.method, config["scheduler"], optimizer, config)
+    model = get_model(args.method_type, config["model"], config["dataset"], args, config)
+    optimizer = get_optimizer(args.method_type, config["optimizer"], model, config)
+    scheduler = get_scheduler(args.method_type, config["scheduler"], optimizer, config)
     criterion = get_criterion(config["criterion"])
-
+    
     method_map = {
         "laser": ("methods.laser", "train_laser", "test_laser"),
         "decoupled": ("methods.decoupled", "train_decoupled", "test_decoupled"),
         "ensemble": ("methods.ensemble", "train_decoupled", "test_ensemble"),
         "plug": ("methods.plug", "train_plug", "test_plug"),
     }
-    module_name, train_name, test_name = method_map[args.method]
+    module_name, train_name, test_name = method_map[args.method_type]
     mod = __import__(module_name, fromlist=[train_name, test_name])
     train, test = getattr(mod, train_name), getattr(mod, test_name)
 
     return config, model, optimizer, scheduler, criterion, train, test
 
-
-def check_sets_of_clients_valid(args):
-    if args.blocks_in_tasks_t is not None:
-        if args.method == "laser":
-            raise ValueError("blocks_in_tasks_t should not be provided when method is 'laser'")
-        try:
-            args.blocks_in_tasks_t = ast.literal_eval(args.blocks_in_tasks_t)
-        except (ValueError, SyntaxError):
-            raise ValueError("Invalid format for blocks_in_tasks_t. Must be a valid list of tuples.")
+def process_method(args):
+    if args.method in ("local", "ensemble"):
+        args.blocks_in_tasks_t =  [(i,) for i in range(args.num_clients)]
+    elif args.method in ("svfl", "plug"):
+        args.blocks_in_tasks_t =  [tuple(range(args.num_clients))]
+    elif args.method in ("combinatorial", "laser"):
+        args.blocks_in_tasks_t =  powerset_except_empty(args.num_clients)
     else:
-        args.blocks_in_tasks_t = powerset_except_empty(args.num_clients)
+        raise ValueError("Invalid method.")
+    
+    args.method_type = "decoupled" if args.method in ("local", "svfl", "combinatorial") else args.method
 
 
 def get_metrics(train_metrics, test_metrics, compute_f1, blocks_in_tasks_t):

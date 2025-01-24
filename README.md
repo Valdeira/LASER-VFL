@@ -29,9 +29,6 @@ To run an experiment, simply run main.py with the appropriate arguments. For exa
 python main.py --task_name cifar10 --cuda_id 0 --num_clients 4 --method laser --seed 0
 ```
 
-Local, Standard VFL, and Combinatorial are all special instances of
-"decoupled" with and appropriate "--blocks_in_tasks_t" argument.
-
 To get the results for Table 1, run the following command with the appropriate arguments. For example:
 
 ```bash

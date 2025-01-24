@@ -17,14 +17,14 @@ def _create_scheduler(scheduler_name: str, optimizer, config: dict):
     raise ValueError(f"Scheduler not implemented: {scheduler_name}")
 
 
-def get_scheduler(method: str, scheduler_name: str, optimizers, config: dict):
+def get_scheduler(method_type: str, scheduler_name: str, optimizers, config: dict):
     if scheduler_name == "n/a":
         return []
 
     if not isinstance(optimizers, list):
         optimizers = [optimizers]
 
-    if method in ("laser", "decoupled", "ensemble"):
+    if method_type in ("laser", "decoupled", "ensemble"):
         return [_create_scheduler(scheduler_name, opt, config) for opt in optimizers]
     else:
-        raise ValueError(f"Unknown method: {method}")
+        raise ValueError(f"Unknown method type: {method_type}")

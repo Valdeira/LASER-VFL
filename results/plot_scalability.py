@@ -8,7 +8,7 @@ from matplotlib.ticker import MaxNLocator
 import wandb
 
 MAP_METHOD_TO_LABEL = {
-    "rvfl": "LASER-VFL",
+    "laser": "LASER-VFL",
     "powerset": "Combinatorial",
     "local": "Local",
     "svfl": "Standard VFL",
