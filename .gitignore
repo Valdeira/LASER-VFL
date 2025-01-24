@@ -161,3 +161,7 @@ data/MIMIC-IV-Data-Pipeline/scrap
 data/MIMIC-IV-Data-Pipeline/*.gzip
 data/MIMIC-IV-Data-Pipeline/*.csv.gz
 data/MIMIC-IV-Data-Pipeline/*summary*.txt
+
+# ignoring mimic-related code while cleaning it before making it public
+models/lstm.py
+models/mimic_model_utils.py
