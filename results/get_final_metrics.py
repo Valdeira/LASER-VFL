@@ -38,11 +38,16 @@ def main(project_name, run_names, metric_name):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--project_name', default='pvaldeira-team/vfl-sandbox')
+    parser.add_argument('--project_name', default='pvaldeira-team/laser-vfl')
+    parser.add_argument('--task_name', choices=['hapt', 'credit', 'mimic4', 'cifar10', 'cifar100'], required=True)
+    parser.add_argument('--method', choices=['local', 'svfl', 'ensemble', 'combinatorial', 'plug', 'laser'], required=True)
+    parser.add_argument('--p_miss_train', type=float, default=0.0)
+    parser.add_argument('--num_clients', type=int, default=4)
+    parser.add_argument('--metric_name', choices=['acc', 'f1'], required=True)
+    parser.add_argument('--p_miss_test', choices=['0.0', '0.1', '0.5', None], required=True)
     args = parser.parse_args()
 
-    # Example usage (None means p_{miss} is sampled):
-    metric_name = "final_test_acc_None"
-    run_names = [f"powerset_cifar10_beta_s{i}" for i in range(5)]
+    args.metric_name = f"final_test_{args.metric_name}_{args.p_miss_test}"
+    run_names = [f"{args.task_name}_{args.method}_K{args.num_clients}_p_miss_train{args.p_miss_train}_s{i}" for i in range(5)]
 
-    main(args.project_name, run_names, metric_name)
+    main(args.project_name, run_names, args.metric_name)
