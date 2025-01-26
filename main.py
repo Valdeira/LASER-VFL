@@ -55,20 +55,19 @@ def main(args: argparse.Namespace) -> None:
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('--task_name', choices=['hapt', 'credit', 'mimic4', 'cifar10', 'cifar100'])
+    parser.add_argument('--task_name', choices=['hapt', 'credit', 'mimic4', 'cifar10', 'cifar100'], required=True)
     parser.add_argument('--cuda_id', type=int, default=0)
     parser.add_argument('--wandb_name', help='Name of the run.')
-    parser.add_argument('--seeds', type=int, nargs='+', default=[0], help='E.g. "--seed 0 1 2")')
+    parser.add_argument('--seeds', type=int, nargs='+', default=[0], help='E.g. "--seeds 0 1 2"')
     parser.add_argument('--num_clients', type=int, default=4)
     parser.add_argument('--p_miss_train', type=float, default=0.0)
-    parser.add_argument('--final_p_miss_test_l', type=lambda x: None if x == "None" else float(x), nargs='*',
-                        default=[0.0, 0.1, 0.5, None], help="List of missing probabilities for testing.")
     parser.add_argument('--no_wandb', action='store_false', dest='use_wandb', help='Disable wandb logging.')
     parser.add_argument('--method', choices=['local', 'svfl', 'ensemble', 'combinatorial', 'plug', 'laser'], required=True)
     parser.add_argument('--p_drop', type=float, default=0.0)
+    parser.add_argument('--project', type=str, default='laser-vfl', help='Project name for wandb.')
     
     args = parser.parse_args()
-    args.project = 'laser-vfl'
+    args.final_p_miss_test_l = [0.0, 0.1, 0.5, None]
     args.device = torch.device(f'cuda:{args.cuda_id}' if torch.cuda.is_available() else 'cpu')
 
     for seed in args.seeds:
