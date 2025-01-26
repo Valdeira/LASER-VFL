@@ -80,7 +80,7 @@ def setup_task(args):
     method_map = {
         "laser": ("methods.laser", "train_laser", "test_laser"),
         "decoupled": ("methods.decoupled", "train_decoupled", "test_decoupled"),
-        "ensemble": ("methods.ensemble", "train_decoupled", "test_ensemble"),
+        "ensemble": ("methods.ensemble", "train_ensemble", "test_ensemble"),
         "plug": ("methods.plug", "train_plug", "test_plug"),
     }
     module_name, train_name, test_name = method_map[args.method_type]

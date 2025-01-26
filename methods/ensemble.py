@@ -4,7 +4,7 @@ import torch
 
 from utils import time_decorator
 from methods.method_utils import get_f1
-
+from methods.decoupled import train_decoupled as train_ensemble
 
 @time_decorator
 def test_ensemble(dataloader, models, criterion, device, is_final=False, compute_f1=False, is_train_data=False):

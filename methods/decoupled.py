@@ -11,7 +11,7 @@ def test_decoupled(dataloader, models, criterion, device, is_final=False, comput
         model.eval()
     
     num_models = len(models)
-    is_powerset = True if num_models == 2 ** model.num_clients - 1 else False
+    is_powerset = True if num_models == 2 ** model.num_clients - 1 else False # TODO instead, get args and use args.method to see if combinatorial
     num_samples = len(dataloader.dataset)
     num_batches = len(dataloader)
     loss_l, correct_l = [0.0] * num_models, [0.0] * num_models
