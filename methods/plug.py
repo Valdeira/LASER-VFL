@@ -5,7 +5,7 @@ from methods.method_utils import get_f1
 
 
 @time_decorator
-def test_plug(dataloader, models, criterion, device, is_final=False, compute_f1=False, is_train_data=False):
+def test_plug(dataloader, models, criterion, args, is_final=False, compute_f1=False, is_train_data=False):
     
     for model in models:
         model.eval()
@@ -23,7 +23,7 @@ def test_plug(dataloader, models, criterion, device, is_final=False, compute_f1=
     with torch.no_grad():
         for batch in dataloader:
             *inputs, targets, mask = batch
-            inputs, targets = [tensor.to(device) for tensor in inputs], targets.to(device)
+            inputs, targets = [tensor.to(args.device) for tensor in inputs], targets.to(args.device)
 
             # if client zero (active party) unobserved, skip batch
             if not mask[-1].item():

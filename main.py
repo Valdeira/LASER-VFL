@@ -19,8 +19,8 @@ def main(args: argparse.Namespace) -> None:
     
     # compute initial metrics
     compute_f1 = True if args.task_name in ["mimic4", "credit"] else False
-    train_metrics = test(train_loader, models, criterion, args.device, compute_f1=compute_f1, is_train_data=True)
-    test_metrics = test(test_loader, models, criterion, args.device, compute_f1=compute_f1)
+    train_metrics = test(train_loader, models, criterion, args, compute_f1=compute_f1, is_train_data=True)
+    test_metrics = test(test_loader, models, criterion, args, compute_f1=compute_f1)
     if args.use_wandb:
         wandb.log(get_metrics(train_metrics, test_metrics, compute_f1, args.blocks_in_tasks_t))
     
@@ -28,7 +28,7 @@ def main(args: argparse.Namespace) -> None:
     for epoch in range(config["num_epochs"]):
         print_exp_info(args, config, epoch)
         train_metrics = train(train_loader, models, optimizers, criterion, args, compute_f1=compute_f1)
-        test_metrics = test(test_loader, models, criterion, args.device, compute_f1=compute_f1)
+        test_metrics = test(test_loader, models, criterion, args, compute_f1=compute_f1)
         for scheduler in schedulers:
             scheduler.step()
         if args.use_wandb:
@@ -37,7 +37,7 @@ def main(args: argparse.Namespace) -> None:
     # test
     for p_miss_test in args.final_p_miss_test_l:
         _, test_loader = get_dataloaders(args, config, p_miss_test)
-        test_metrics = test(test_loader, models, criterion, args.device, compute_f1=compute_f1, is_final=True)
+        test_metrics = test(test_loader, models, criterion, args, compute_f1=compute_f1, is_final=True)
         metrics = {f'final_test_acc_{p_miss_test}': test_metrics["final_test_acc"]}
         print_str = (f"(p_miss_test {p_miss_test}) "
                      f"final_test_acc: {test_metrics['final_test_acc']}")

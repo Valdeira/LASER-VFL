@@ -30,16 +30,10 @@ def generate_mask_patterns_for_batches(num_batches, num_blocks, p_observed_list=
 
 
 def collate_fn(batch):
-    # Unpack the batch into feature sets, labels, and masks
     *features, labels, masks = zip(*batch)
-
-    # Stack each feature set
     stacked_features = [torch.stack(feature_set) for feature_set in features]
-
-    labels = torch.tensor(labels)  # Convert labels to tensor
-    mask = masks[0]  # Use the first mask (assuming same for all in the batch)
-
-    # Return the stacked feature sets, labels, and mask
+    labels = torch.tensor(labels)
+    mask = masks[0] # use the first mask (assuming same for all in the batch)
     return (*stacked_features, labels, mask)
 
 

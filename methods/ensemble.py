@@ -7,7 +7,7 @@ from methods.method_utils import get_f1
 from methods.decoupled import train_decoupled as train_ensemble
 
 @time_decorator
-def test_ensemble(dataloader, models, criterion, device, is_final=False, compute_f1=False, is_train_data=False):
+def test_ensemble(dataloader, models, criterion, args, is_final=False, compute_f1=False, is_train_data=False):
     
     for model in models:
         model.eval()
@@ -29,7 +29,7 @@ def test_ensemble(dataloader, models, criterion, device, is_final=False, compute
     with torch.no_grad():
         for batch in dataloader:
             *inputs, targets, mask = batch
-            inputs, targets = [tensor.to(device) for tensor in inputs], targets.to(device)
+            inputs, targets = [tensor.to(args.device) for tensor in inputs], targets.to(args.device)
 
             if torch.sum(mask).item() == 0:
                 num_batches -= 1 # in practice, this batch is not used
@@ -37,7 +37,7 @@ def test_ensemble(dataloader, models, criterion, device, is_final=False, compute
                 continue
             
             cur_batch_size = inputs[0].size(0)
-            ensemble_votes = torch.zeros(cur_batch_size, len(dataloader.dataset.classes)).to(device)
+            ensemble_votes = torch.zeros(cur_batch_size, len(dataloader.dataset.classes)).to(args.device)
             for i, model in enumerate(models):
                 outputs = model(inputs)
                 loss = criterion(outputs, targets)
@@ -61,7 +61,7 @@ def test_ensemble(dataloader, models, criterion, device, is_final=False, compute
                         raise NotImplementedError("The final accuracy with p_miss@test>=0 is only implemented for local models and standard VFL models.")
             
             if is_final:
-                predicted = random_argmax_along_axis(ensemble_votes).to(device)
+                predicted = random_argmax_along_axis(ensemble_votes).to(args.device)
                 final_correct += (predicted == targets).float().sum().item()
                 # assuming that when training local model we train one per each client
                 if compute_f1:

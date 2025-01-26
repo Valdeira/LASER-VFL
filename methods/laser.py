@@ -7,7 +7,7 @@ from methods.method_utils import get_f1
 
 
 @time_decorator
-def test_laser(dataloader, models, criterion, device, is_final=False, compute_f1=False, is_train_data=False):
+def test_laser(dataloader, models, criterion, args, is_final=False, compute_f1=False, is_train_data=False):
     
     [model] = models
 
@@ -30,7 +30,7 @@ def test_laser(dataloader, models, criterion, device, is_final=False, compute_f1
     with torch.no_grad():
         for batch in dataloader:
             *inputs, targets, mask = batch
-            inputs, targets = [tensor.to(device) for tensor in inputs], targets.to(device)
+            inputs, targets = [tensor.to(args.device) for tensor in inputs], targets.to(args.device)
             
             if torch.sum(mask).item() == 0:
                 num_batches -= 1 # in practice, this batch is not used

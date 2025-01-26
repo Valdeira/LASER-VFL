@@ -5,13 +5,12 @@ from methods.method_utils import get_f1
 
 
 @time_decorator
-def test_decoupled(dataloader, models, criterion, device, is_final=False, compute_f1=False, is_train_data=False):
+def test_decoupled(dataloader, models, criterion, args, is_final=False, compute_f1=False, is_train_data=False):
     
     for model in models:
         model.eval()
     
     num_models = len(models)
-    is_powerset = True if num_models == 2 ** model.num_clients - 1 else False # TODO instead, get args and use args.method to see if combinatorial
     num_samples = len(dataloader.dataset)
     num_batches = len(dataloader)
     loss_l, correct_l = [0.0] * num_models, [0.0] * num_models
@@ -24,7 +23,7 @@ def test_decoupled(dataloader, models, criterion, device, is_final=False, comput
     with torch.no_grad():
         for batch in dataloader:
             *inputs, targets, mask = batch
-            inputs, targets = [tensor.to(device) for tensor in inputs], targets.to(device)
+            inputs, targets = [tensor.to(args.device) for tensor in inputs], targets.to(args.device)
 
             if torch.sum(mask).item() == 0:
                 num_batches -= 1 # in practice, this batch is not used
@@ -44,8 +43,7 @@ def test_decoupled(dataloader, models, criterion, device, is_final=False, comput
                 
                 if is_final:
 
-                    # powerset of models
-                    if is_powerset:
+                    if args.method == "combinatorial":
                         if set(model.clients_in_model) == set(torch.nonzero(mask).view(-1).tolist()):
                             final_correct += (predicted == targets).float().sum().item()
                             if compute_f1:
@@ -53,8 +51,7 @@ def test_decoupled(dataloader, models, criterion, device, is_final=False, comput
                                 final_false_positive_l[i] += ((predicted == 1) & (targets == 0)).sum().item()
                                 final_false_negative_l[i] += ((predicted == 0) & (targets == 1)).sum().item()
 
-                    # local model
-                    elif len(model.clients_in_model) == 1:
+                    elif args.method == "local":
                         [client_in_model] = model.clients_in_model
                         observed_blocks_l = torch.nonzero(mask).view(-1).tolist()
                         if client_in_model in observed_blocks_l:
@@ -66,12 +63,11 @@ def test_decoupled(dataloader, models, criterion, device, is_final=False, comput
                                 final_false_positive_l[i] += ((predicted == 1) & (targets == 0)).sum().item()
                                 final_false_negative_l[i] += ((predicted == 0) & (targets == 1)).sum().item()
                     
-                    # standard vfl model
-                    elif len(model.clients_in_model) == len(mask):
+                    elif args.method == "svfl":
                         if torch.all(mask):
                             predicted = outputs.argmax(1)
                         else:
-                            predicted = torch.randint(0, outputs.shape[1], targets.shape).to(device) # random predictions
+                            predicted = torch.randint(0, outputs.shape[1], targets.shape).to(args.device) # random predictions
                         final_correct += (predicted == targets).float().sum().item()
                         if compute_f1:
                             final_true_positive_l[i] += ((predicted == 1) & (targets == 1)).sum().item()
