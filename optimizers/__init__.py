@@ -24,7 +24,7 @@ def get_optimizer(method_type: str, name: str, model, config: dict):
     if not isinstance(model, (list, tuple)):
         model = [model]
     
-    if method_type in ("laser", "decoupled", "ensemble"):
+    if method_type in ("laser", "decoupled", "ensemble", "plug"):
         return [_create_optimizer(m, name, config) for m in model]
     else:
         raise ValueError(f"Unknown method type: {method_type}")
