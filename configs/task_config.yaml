@@ -1351,7 +1351,7 @@ plug:
         dataset: mimic4
         model: lstm
         criterion: cross_entropy
-        num_epochs: 20 # CHANGE BACK TO 20
+        num_epochs: 20
         batch_size: 128
         optimizer: adam
         lr: 0.001
@@ -1365,7 +1365,7 @@ plug:
         dataset: mimic4
         model: lstm
         criterion: cross_entropy
-        num_epochs: 20 # CHANGE BACK TO 20
+        num_epochs: 20
         batch_size: 128
         optimizer: adam
         lr: 0.001
@@ -1379,7 +1379,7 @@ plug:
         dataset: mimic4
         model: lstm
         criterion: cross_entropy
-        num_epochs: 20 # CHANGE BACK TO 20
+        num_epochs: 20
         batch_size: 128
         optimizer: adam
         lr: 0.001
