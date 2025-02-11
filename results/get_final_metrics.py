@@ -47,16 +47,9 @@ if __name__ == '__main__':
     parser.add_argument('--p_miss_test', nargs='+', default=['0.0', '0.1', '0.5', None]) # 0.0|0.1|0.5|None
     args = parser.parse_args()
 
-    # TODO uncomment here
     for p_miss_train in args.p_miss_train:
         print(f"p_miss_train {p_miss_train}")
         for p_miss_test in args.p_miss_test:
             metric_name = f"final_test_{args.metric}_{p_miss_test}"
             run_names = [f"{args.task_name}_{args.method}_K{args.num_clients}_p_miss_train{p_miss_train}_s{i}" for i in range(5)]
             main(args.project_name, run_names, metric_name)
-    
-    # TODO delete here
-    # for p_miss_test in args.p_miss_test:
-    #     metric_name = f"final_test_{args.metric}_{p_miss_test}"
-    #     run_names = ["new .02lr .02wd -eta"]
-    #     main(args.project_name, run_names, metric_name)
