@@ -9,7 +9,7 @@ import wandb
 
 MAP_METHOD_TO_LABEL = {
     "laser": "LASER-VFL",
-    "powerset": "Combinatorial",
+    "combinatorial": "Combinatorial",
     "local": "Local",
     "svfl": "Standard VFL",
     "ensemble": "Ensemble",
@@ -83,7 +83,7 @@ def plot(plot_name: str, trajectories: dict,
 def print_runtime_ratios(runtime_trajectories):
     """Print the ratio of powerset to laser runtime for the first 6 values."""
     K = 6
-    laser_clients, laser_runtimes = runtime_trajectories["rvfl"]
+    laser_clients, laser_runtimes = runtime_trajectories["laser"]
     powerset_clients, powerset_runtimes = runtime_trajectories["powerset"]
 
     laser_clients, laser_runtimes = laser_clients[:K], laser_runtimes[:K]
@@ -95,17 +95,18 @@ def print_runtime_ratios(runtime_trajectories):
         print(f"runtime ratio (powerset/laser) for K={nc} clients: {ratio}")
 
 
-def main(project_name, experiments, metric_name):
+def main(project_name, experiments, metric_name, methods):
     api = wandb.Api()
     runtime_traj, metric_traj = {}, {}
 
     for exp in experiments:
+        
         results = [get_result(project_name, run_names, metric_name, api) for run_names in exp]
         results = [r for r in results if r is not None]
         if not results:
             continue
-
-        method = exp[0][0].split('_')[0]
+        
+        method = exp[0][0].split('_')[1]
         clients, rtimes, metrics = [], [], []
         for (_, avg_m, std_m, avg_r, std_r, nc) in results:
             clients.append(nc)
@@ -117,21 +118,26 @@ def main(project_name, experiments, metric_name):
 
     plot("Runtime scalability", runtime_traj, "Number of clients", "Runtime (min)")
     plot("Performance scalability", metric_traj, "Number of clients", "Test accuracy", (0, 100))
-    print_runtime_ratios(runtime_traj)
+    if "laser" in methods and "powerset" in methods:
+        print_runtime_ratios(runtime_traj)
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--project_name', default='pvaldeira-team/vfl-sandbox')
+    parser.add_argument('--project_name', default='pvaldeira-team/laser-vfl')
+    parser.add_argument('--methods', nargs='+', default=['laser', 'combinatorial', 'local', 'svfl', 'ensemble', 'plug'])
     args = parser.parse_args()
 
+    task_name = "cifar10"
+    p_miss_train = "p_miss_train0.1"
     metric = "final_test_acc_0.1"
+    num_seeds = 5
+    max_num_clients = 8
+    
     exps = [
-        [["rvfl_cifar10_" + str(k) + "K_s" + str(i) for i in range(5)] for k in range(2, 9)],
-        [["powerset_cifar10_" + str(k) + "K_s" + str(i) for i in range(5)] for k in range(2, 8)],
-        [["local_cifar10_" + str(k) + "K_s" + str(i) for i in range(5)] for k in range(2, 9)],
-        [["svfl_cifar10_" + str(k) + "K_s" + str(i) for i in range(5)] for k in range(2, 9)],
-        [["ensemble_cifar10_" + str(k) + "K_s" + str(i) for i in range(5)] for k in range(2, 9)],
-        [["plug_cifar10_" + str(k) + "K_s" + str(i) for i in range(5)] for k in range(2, 9)],
+        [[f"{task_name}_{m}_K{k}_{p_miss_train}_s{i}" for i in range(num_seeds)]
+            for k in (range(2, max_num_clients) if m == "combinatorial" else range(2, max_num_clients + 1))]
+        for m in args.methods
     ]
-    main(args.project_name, exps, metric)
+
+    main(args.project_name, exps, metric, args.methods)
