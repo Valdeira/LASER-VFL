@@ -1,4 +1,3 @@
-import ast
 import random
 import time
 from itertools import chain, combinations
@@ -36,6 +35,7 @@ def init_wandb(args, config):
             "batch_size": config["batch_size"],
             "weight_decay": config["weight_decay"],
             "momentum": config["momentum"],
+            "p_miss_train": args.p_miss_train,
         },
         name = (
             args.wandb_name 
