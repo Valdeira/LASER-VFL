@@ -8,8 +8,7 @@ from sklearn.model_selection import train_test_split
 from torch.utils.data import DataLoader, WeightedRandomSampler
 
 from data.custom_dataset import (CustomDataset, CustomMIMICDataset,
-                                CreditDataset, HAPTDataset,
-                                collate_fn, generate_mask_patterns_for_batches)
+                                CreditDataset, HAPTDataset, collate_fn)
 
 
 def get_dataloaders(args, config, p_miss_test=0.0):
@@ -66,12 +65,8 @@ def get_dataloaders(args, config, p_miss_test=0.0):
 
 
 def create_data_loader(base_dataset, batch_size, num_clients, p_miss, num_workers=0, drop_last=False, sampler=None):
-    num_samples = len(base_dataset)
-    num_batches = (num_samples + batch_size - 1) // batch_size
-    p_observed = None if p_miss is None else (1 - p_miss)
-    patterns = generate_mask_patterns_for_batches(num_batches, num_clients, p_observed)
-    wrapped = CustomDataset(base_dataset, patterns, batch_size)
-    return DataLoader(wrapped, batch_size=batch_size, num_workers=num_workers, collate_fn=collate_fn, 
+    wrapped_dataset = CustomDataset(base_dataset, batch_size, num_clients, p_miss)
+    return DataLoader(wrapped_dataset, batch_size=batch_size, num_workers=num_workers, collate_fn=collate_fn, 
                       drop_last=drop_last, sampler=sampler)
 
 

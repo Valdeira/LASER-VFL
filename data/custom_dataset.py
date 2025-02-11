@@ -7,26 +7,27 @@ import torch
 import pandas as pd
 
 
-def generate_mask_patterns_for_batches(num_batches, num_blocks, p_observed_list=None):
+def _get_mask_per_batch(num_batches, num_blocks, p_miss=None):
     
-    if isinstance(p_observed_list, float):
-        p_observed_list = [p_observed_list] * num_blocks
-    elif p_observed_list is None:
-        p_observed_list = np.random.beta(2.0, 2.0, num_blocks)
+    p_observed = None if p_miss is None else (1 - p_miss)
+    if isinstance(p_observed, float):
+        p_observed_array = np.array([p_observed] * num_blocks)
+    elif p_observed is None:
+        p_observed_array = np.random.beta(2.0, 2.0, num_blocks)
 
     patterns = [np.array([bool(int(x)) for x in bin(i)[2:].zfill(num_blocks)]) for i in range(2**num_blocks)]
     
     probabilities = []
     for pattern in patterns:
         prob = 1.0
-        for block, p_observed in zip(pattern, p_observed_list):
+        for block, p_observed in zip(pattern, p_observed_array):
             prob *= p_observed if block else (1 - p_observed)
         probabilities.append(prob)
 
     chosen_patterns = np.random.choice(len(patterns), size=num_batches, p=np.array(probabilities) / np.sum(probabilities))
     batch_patterns = [patterns[i] for i in chosen_patterns]
 
-    return batch_patterns
+    return batch_patterns, p_observed_array
 
 
 def collate_fn(batch):
@@ -38,18 +39,20 @@ def collate_fn(batch):
 
 
 class CustomDataset(Dataset):
-    def __init__(self, data, batch_patterns, batch_size):
-        self.data = data
-        self.batch_patterns = batch_patterns
+    def __init__(self, base_dataset, batch_size, num_clients, p_miss):
+        self.dataset = base_dataset
+        num_samples = len(base_dataset)
+        num_batches = (num_samples + batch_size - 1) // batch_size
+        self.batch_patterns, self.p_observed_array = _get_mask_per_batch(num_batches, num_clients, p_miss)
         self.batch_size = batch_size
-        self.classes = data.classes
+        self.classes = base_dataset.classes
 
     def __len__(self):
-        return len(self.data)
+        return len(self.dataset)
 
     def __getitem__(self, idx):
         batch_idx = idx // self.batch_size
-        data = self.data[idx]
+        data = self.dataset[idx]
 
         features, label = data[:-1], data[-1]
 
