@@ -17,7 +17,7 @@ def main(project_name, run_names, metric_name):
             print(f"No run found with name '{run_name}'")
             continue
         
-        print(f"Run Name: {run.name}, Run ID: {run.id}")
+        # print(f"Run Name: {run.name}, Run ID: {run.id}")
         
         # Get the metric value from the summary
         metric_value = run.summary.get(metric_name)
@@ -41,13 +41,22 @@ if __name__ == '__main__':
     parser.add_argument('--project_name', default='pvaldeira-team/laser-vfl')
     parser.add_argument('--task_name', choices=['hapt', 'credit', 'mimic4', 'cifar10', 'cifar100'], required=True)
     parser.add_argument('--method', choices=['local', 'svfl', 'ensemble', 'combinatorial', 'plug', 'laser'], required=True)
-    parser.add_argument('--p_miss_train', type=float, default=0.0)
     parser.add_argument('--num_clients', type=int, default=4)
-    parser.add_argument('--metric_name', choices=['acc', 'f1'], required=True)
-    parser.add_argument('--p_miss_test', choices=['0.0', '0.1', '0.5', None], required=True)
+    parser.add_argument('--metric', choices=['acc', 'f1'], required=True)
+    parser.add_argument('--p_miss_train', nargs='+', default=['0.0', '0.1', '0.5']) # 0.0|0.1|0.5|None
+    parser.add_argument('--p_miss_test', nargs='+', default=['0.0', '0.1', '0.5', None]) # 0.0|0.1|0.5|None
     args = parser.parse_args()
 
-    args.metric_name = f"final_test_{args.metric_name}_{args.p_miss_test}"
-    run_names = [f"{args.task_name}_{args.method}_K{args.num_clients}_p_miss_train{args.p_miss_train}_s{i}" for i in range(5)]
-
-    main(args.project_name, run_names, args.metric_name)
+    # TODO uncomment here
+    for p_miss_train in args.p_miss_train:
+        print(f"p_miss_train {p_miss_train}")
+        for p_miss_test in args.p_miss_test:
+            metric_name = f"final_test_{args.metric}_{p_miss_test}"
+            run_names = [f"{args.task_name}_{args.method}_K{args.num_clients}_p_miss_train{p_miss_train}_s{i}" for i in range(5)]
+            main(args.project_name, run_names, metric_name)
+    
+    # TODO delete here
+    # for p_miss_test in args.p_miss_test:
+    #     metric_name = f"final_test_{args.metric}_{p_miss_test}"
+    #     run_names = ["new .02lr .02wd -eta"]
+    #     main(args.project_name, run_names, metric_name)
