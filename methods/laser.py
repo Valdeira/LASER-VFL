@@ -118,14 +118,14 @@ def train_laser(dataloader, models, optimizers, criterion, args, compute_f1=Fals
         
         total_loss = 0
         for outputs_per_task_d in outputs_per_head_l:
-
+            
             head_loss = 0
             for clients_subset, outputs in outputs_per_task_d.items():
                 loss = criterion(outputs, targets)
-
+                
                 norm_constant = 1.0
                 norm_constant = norm_constant / len(clients_subset) # account for multiple heads
-                
+
                 # if a given element (client) must be in a set, then we do n-1 choose k-1 instead
                 n, k = (len(observed_blocks)-1, len(clients_subset)-1)
                 norm_constant = norm_constant * math.comb(n, k)
@@ -143,9 +143,9 @@ def train_laser(dataloader, models, optimizers, criterion, args, compute_f1=Fals
                         true_positive_d[clients_subset] += ((predicted == 1) & (targets == 1)).sum().item() / norm_constant
                         false_positive_d[clients_subset] += ((predicted == 1) & (targets == 0)).sum().item() / norm_constant
                         false_negative_d[clients_subset] += ((predicted == 0) & (targets == 1)).sum().item() / norm_constant
-
+            
             total_loss += head_loss
-
+        
         total_loss.backward()
         optimizer.step()
         
