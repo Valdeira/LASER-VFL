@@ -3,7 +3,7 @@ import wandb
 import torch
 
 from utils import (time_decorator, print_exp_info, init_wandb, setup_task,
-                    set_seed, process_method, get_metrics)
+                    set_seed, process_method, get_metrics, none_or_float)
 from data.data_utils import get_dataloaders
 
 
@@ -60,7 +60,7 @@ if __name__ == '__main__':
     parser.add_argument('--wandb_name', help='Name of the run.')
     parser.add_argument('--seeds', type=int, nargs='+', default=[0], help='E.g. "--seeds 0 1 2"')
     parser.add_argument('--num_clients', type=int, default=4)
-    parser.add_argument('--p_miss_train', type=float, default=0.0)
+    parser.add_argument('--p_miss_train', type=none_or_float, default=0.0)
     parser.add_argument('--no_wandb', action='store_false', dest='use_wandb', help='Disable wandb logging.')
     parser.add_argument('--method', choices=['local', 'svfl', 'ensemble', 'combinatorial', 'plug', 'laser'], required=True)
     parser.add_argument('--p_drop', type=float, default=0.0)

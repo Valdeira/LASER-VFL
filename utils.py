@@ -1,5 +1,6 @@
 import random
 import time
+import argparse
 from itertools import chain, combinations
 
 import numpy as np
@@ -116,3 +117,12 @@ def get_metrics(train_metrics, test_metrics, compute_f1, blocks_in_tasks_t):
         }
         for i, clients in enumerate(blocks_in_tasks_t)
     }
+
+
+def none_or_float(value):
+    if value.lower() == 'none':
+        return None
+    try:
+        return float(value)
+    except ValueError:
+        raise argparse.ArgumentTypeError(f"{value} is not a valid float or 'None'.")
