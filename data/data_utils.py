@@ -55,10 +55,10 @@ def get_dataloaders(args, config, p_miss_test=0.0):
         if dataset not in ds_map:
             raise ValueError(f"Unknown dataset '{dataset}'.")
         ds_class = ds_map[dataset]
-        transform = get_image_transforms(dataset)
+        train_transform, test_transform = get_image_transforms(dataset)
 
-        train_set = ds_class(data_dir, download=True, train=True, transform=transform)
-        test_set  = ds_class(data_dir, download=True, train=False, transform=transform)
+        train_set = ds_class(data_dir, download=True, train=True, transform=train_transform)
+        test_set  = ds_class(data_dir, download=True, train=False, transform=test_transform)
         train_ld  = create_data_loader(train_set, batch_size, args.num_clients, args.p_miss_train, num_workers)
         test_ld   = create_data_loader(test_set,  batch_size, args.num_clients, p_miss_test,    num_workers)
         return train_ld, test_ld
@@ -73,16 +73,24 @@ def create_data_loader(base_dataset, batch_size, num_clients, p_miss, num_worker
 def get_image_transforms(dataset_name):
     if dataset_name == 'cifar100':
         norm = transforms.Normalize((0.5071, 0.4867, 0.4408), (0.2675, 0.2565, 0.2761))
-        return transforms.Compose([transforms.RandomCrop(32, padding=4),
+        train_transform = transforms.Compose([transforms.RandomCrop(32, padding=4),
                                    transforms.RandomHorizontalFlip(),
                                    transforms.ToTensor(), 
                                    norm])
+        test_transform = transforms.Compose([transforms.Resize(32),
+                                   transforms.ToTensor(), 
+                                   norm])
+        return train_transform, test_transform
     elif dataset_name == 'cifar10':
         norm = transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2470, 0.2435, 0.2616))
-        return transforms.Compose([transforms.RandomCrop(32, padding=4),
+        train_transform = transforms.Compose([transforms.RandomCrop(32, padding=4),
                                    transforms.RandomHorizontalFlip(),
                                    transforms.ToTensor(), 
                                    norm])
+        test_transform = transforms.Compose([transforms.Resize(32),
+                                   transforms.ToTensor(), 
+                                   norm])
+        return train_transform, test_transform
     else:
         raise ValueError(f"No transforms defined for '{dataset_name}'.")
 
