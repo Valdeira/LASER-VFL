@@ -53,5 +53,3 @@ if __name__ == '__main__':
             metric_name = f"final_test_{args.metric}_{p_miss_test}"
             run_names = [f"{args.task_name}_{args.method}_K{args.num_clients}_p_miss_train{p_miss_train}_s{i}" for i in range(5)]
             main(args.project_name, run_names, metric_name)
-
-# python results/get_final_metrics.py --task_name hapt --method local --metric acc --p_miss_train 0.0 --p_miss_test 0.0 0.1 0.5
