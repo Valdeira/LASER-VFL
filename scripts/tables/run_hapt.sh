@@ -21,9 +21,9 @@ python main.py --task_name hapt --method combinatorial --p_miss_train 0.0 --seed
 python main.py --task_name hapt --method combinatorial --p_miss_train 0.1 --seed 0 1 2 3 4 --cuda_id "${CUDA_ID}"
 python main.py --task_name hapt --method combinatorial --p_miss_train 0.5 --seed 0 1 2 3 4 --cuda_id "${CUDA_ID}"
 
-python main.py --task_name hapt --method plug --p_miss_train 0.0 --seed 0 1 2 3 4 --cuda_id "${CUDA_ID}"
-python main.py --task_name hapt --method plug --p_miss_train 0.1 --seed 0 1 2 3 4 --cuda_id "${CUDA_ID}"
-python main.py --task_name hapt --method plug --p_miss_train 0.5 --seed 0 1 2 3 4 --cuda_id "${CUDA_ID}"
+python main.py --task_name hapt --method plug  --p_drop 0.05 --p_miss_train 0.0 --seed 0 1 2 3 4 --cuda_id "${CUDA_ID}"
+python main.py --task_name hapt --method plug  --p_drop 0.05 --p_miss_train 0.1 --seed 0 1 2 3 4 --cuda_id "${CUDA_ID}"
+python main.py --task_name hapt --method plug  --p_drop 0.05 --p_miss_train 0.5 --seed 0 1 2 3 4 --cuda_id "${CUDA_ID}"
 
 python main.py --task_name hapt --method laser --p_miss_train 0.0 --seed 0 1 2 3 4 --cuda_id "${CUDA_ID}"
 python main.py --task_name hapt --method laser --p_miss_train 0.1 --seed 0 1 2 3 4 --cuda_id "${CUDA_ID}"
