@@ -24,7 +24,7 @@ def get_scheduler(method_type: str, scheduler_name: str, optimizers, config: dic
     if not isinstance(optimizers, list):
         optimizers = [optimizers]
 
-    if method_type in ("laser", "decoupled", "ensemble"):
+    if method_type in ("laser", "decoupled", "ensemble", "plug"):
         return [_create_scheduler(scheduler_name, opt, config) for opt in optimizers]
     else:
         raise ValueError(f"Unknown method type: {method_type}")
