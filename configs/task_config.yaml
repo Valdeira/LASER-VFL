@@ -9,7 +9,7 @@ laser:
         batch_size: 128
         optimizer: adam
         lr: 0.0001
-        weight_decay: 0.001
+        weight_decay: 0.0001
         momentum: n/a
         scheduler: n/a
         eta_min_ratio:  n/a
@@ -23,7 +23,7 @@ laser:
         batch_size: 128
         optimizer: adam
         lr: 0.0001
-        weight_decay: 0.001
+        weight_decay: 0.0001
         momentum: n/a
         scheduler: n/a
         eta_min_ratio:  n/a
@@ -33,14 +33,14 @@ laser:
         dataset: credit
         model: mlp
         criterion: cross_entropy
-        num_epochs: 125
+        num_epochs: 100
         batch_size: 128
         optimizer: adam
         lr: 0.0001
-        weight_decay: 0.001
+        weight_decay: 0.0001
         momentum: n/a
-        scheduler: cosine_annealing_lr
-        eta_min_ratio: 0.2
+        scheduler: n/a
+        eta_min_ratio:  n/a
         num_workers: 1
 
   cifar10: # task
@@ -316,12 +316,12 @@ laser:
         dataset: hapt
         model: mlp
         criterion: cross_entropy
-        num_epochs: 100
+        num_epochs: 50
         batch_size: 128
         optimizer: sgd
-        lr: 0.03
-        weight_decay: 0.0001
-        momentum: 0.8
+        lr: 0.01
+        weight_decay: 0.002
+        momentum: 0.9
         scheduler: n/a
         eta_min_ratio:  n/a
         num_workers: 1
@@ -330,29 +330,29 @@ laser:
         dataset: hapt
         model: mlp
         criterion: cross_entropy
-        num_epochs: 100 # tune
-        batch_size: 128 # tune
+        num_epochs: 50
+        batch_size: 128
         optimizer: sgd
-        lr: 0.03
-        weight_decay: 0.0001 # was 0.01 # tune
-        momentum: 0.8
+        lr: 0.01
+        weight_decay: 0.002
+        momentum: 0.9
         scheduler: n/a
         eta_min_ratio:  n/a
-        num_workers: 1 # tune
+        num_workers: 1
       
       0.5: # p_miss_train
         dataset: hapt
         model: mlp
         criterion: cross_entropy
-        num_epochs: 100 # tune
-        batch_size: 128 # tune
+        num_epochs: 50
+        batch_size: 128
         optimizer: sgd
-        lr: 0.02
-        weight_decay: 0.0001 # was 0.01 # tune
-        momentum: 0.7
+        lr: 0.01
+        weight_decay: 0.002
+        momentum: 0.9
         scheduler: n/a
         eta_min_ratio:  n/a
-        num_workers: 1 # tune
+        num_workers: 1
 
 decoupled:
   credit: # task
@@ -361,7 +361,7 @@ decoupled:
         dataset: credit
         model: mlp
         criterion: cross_entropy
-        num_epochs: 75 # was 50 for local
+        num_epochs: 100
         batch_size: 128
         optimizer: adam
         lr: 0.0001
@@ -375,7 +375,7 @@ decoupled:
         dataset: credit
         model: mlp
         criterion: cross_entropy
-        num_epochs: 75 # was 50 for local
+        num_epochs: 100
         batch_size: 128
         optimizer: adam
         lr: 0.0001
@@ -389,7 +389,7 @@ decoupled:
         dataset: credit
         model: mlp
         criterion: cross_entropy
-        num_epochs: 75 # was 50 for local
+        num_epochs: 100
         batch_size: 128
         optimizer: adam
         lr: 0.0001
@@ -405,12 +405,12 @@ decoupled:
         dataset: hapt
         model: mlp
         criterion: cross_entropy
-        num_epochs: 100
+        num_epochs: 50
         batch_size: 128
         optimizer: sgd
         lr: 0.05
         weight_decay: 0.0001
-        momentum: 0.8
+        momentum: 0.9
         scheduler: n/a
         eta_min_ratio:  n/a
         num_workers: 1
@@ -419,12 +419,12 @@ decoupled:
         dataset: hapt
         model: mlp
         criterion: cross_entropy
-        num_epochs: 100 # tune
+        num_epochs: 50 # tune
         batch_size: 128 # tune
         optimizer: sgd
         lr: 0.05 # tune
         weight_decay: 0.0001 # was 0.01 # tune
-        momentum: 0.8
+        momentum: 0.9
         scheduler: n/a
         eta_min_ratio:  n/a
         num_workers: 1 # tune
@@ -433,12 +433,12 @@ decoupled:
         dataset: hapt
         model: mlp
         criterion: cross_entropy
-        num_epochs: 100 # tune
+        num_epochs: 50 # tune
         batch_size: 128 # tune
         optimizer: sgd
         lr: 0.05 # tune
         weight_decay: 0.0001 # was 0.01 # tune
-        momentum: 0.8
+        momentum: 0.9
         scheduler: n/a
         eta_min_ratio:  n/a
         num_workers: 1 # tune
@@ -716,11 +716,11 @@ ensemble:
         dataset: credit
         model: mlp
         criterion: cross_entropy
-        num_epochs: 50
+        num_epochs: 100
         batch_size: 128
         optimizer: adam
         lr: 0.0001
-        weight_decay: 0.001
+        weight_decay: 0.0001
         momentum: n/a
         scheduler: n/a
         eta_min_ratio:  n/a
@@ -730,11 +730,11 @@ ensemble:
         dataset: credit
         model: mlp
         criterion: cross_entropy
-        num_epochs: 50
+        num_epochs: 100
         batch_size: 128
         optimizer: adam
         lr: 0.0001
-        weight_decay: 0.001
+        weight_decay: 0.0001
         momentum: n/a
         scheduler: n/a
         eta_min_ratio:  n/a
@@ -744,11 +744,11 @@ ensemble:
         dataset: credit
         model: mlp
         criterion: cross_entropy
-        num_epochs: 50
+        num_epochs: 100
         batch_size: 128
         optimizer: adam
         lr: 0.0001
-        weight_decay: 0.001
+        weight_decay: 0.0001
         momentum: n/a
         scheduler: n/a
         eta_min_ratio:  n/a
@@ -1026,12 +1026,12 @@ ensemble:
         dataset: hapt
         model: mlp
         criterion: cross_entropy
-        num_epochs: 100
+        num_epochs: 50
         batch_size: 128
         optimizer: sgd
         lr: 0.05
         weight_decay: 0.0001
-        momentum: 0.8
+        momentum: 0.9
         scheduler: n/a
         eta_min_ratio:  n/a
         num_workers: 1
@@ -1040,12 +1040,12 @@ ensemble:
         dataset: hapt
         model: mlp
         criterion: cross_entropy
-        num_epochs: 100 # tune
+        num_epochs: 50 # tune
         batch_size: 128 # tune
         optimizer: sgd
         lr: 0.05 # tune
         weight_decay: 0.0001 # was 0.01 # tune
-        momentum: 0.8
+        momentum: 0.9
         scheduler: n/a
         eta_min_ratio:  n/a
         num_workers: 1 # tune
@@ -1054,12 +1054,12 @@ ensemble:
         dataset: hapt
         model: mlp
         criterion: cross_entropy
-        num_epochs: 100 # tune
+        num_epochs: 50 # tune
         batch_size: 128 # tune
         optimizer: sgd
         lr: 0.05 # tune
         weight_decay: 0.0001 # was 0.01 # tune
-        momentum: 0.8
+        momentum: 0.9
         scheduler: n/a
         eta_min_ratio:  n/a
         num_workers: 1 # tune
@@ -1071,12 +1071,12 @@ plug:
         dataset: hapt
         model: mlp
         criterion: cross_entropy
-        num_epochs: 100
+        num_epochs: 50
         batch_size: 128
         optimizer: sgd
         lr: 0.05
         weight_decay: 0.0001
-        momentum: 0.8
+        momentum: 0.9
         scheduler: n/a
         eta_min_ratio:  n/a
         num_workers: 1
@@ -1085,12 +1085,12 @@ plug:
         dataset: hapt
         model: mlp
         criterion: cross_entropy
-        num_epochs: 100 # tune
+        num_epochs: 50
         batch_size: 128 # tune
         optimizer: sgd
         lr: 0.05 # tune
         weight_decay: 0.0001 # was 0.01 # tune
-        momentum: 0.8
+        momentum: 0.9
         scheduler: n/a
         eta_min_ratio:  n/a
         num_workers: 1 # tune
@@ -1099,12 +1099,12 @@ plug:
         dataset: hapt
         model: mlp
         criterion: cross_entropy
-        num_epochs: 100 # tune
+        num_epochs: 50
         batch_size: 128 # tune
         optimizer: sgd
         lr: 0.05 # tune
         weight_decay: 0.0001 # was 0.01 # tune
-        momentum: 0.8
+        momentum: 0.9
         scheduler: n/a
         eta_min_ratio:  n/a
         num_workers: 1 # tune
@@ -1307,7 +1307,7 @@ plug:
         dataset: credit
         model: mlp
         criterion: cross_entropy
-        num_epochs: 75 # was 50 for local
+        num_epochs: 100
         batch_size: 128
         optimizer: adam
         lr: 0.0001
@@ -1321,7 +1321,7 @@ plug:
         dataset: credit
         model: mlp
         criterion: cross_entropy
-        num_epochs: 75 # was 50 for local
+        num_epochs: 100
         batch_size: 128
         optimizer: adam
         lr: 0.0001
@@ -1335,7 +1335,7 @@ plug:
         dataset: credit
         model: mlp
         criterion: cross_entropy
-        num_epochs: 75 # was 50 for local
+        num_epochs: 100
         batch_size: 128
         optimizer: adam
         lr: 0.0001
