@@ -81,18 +81,18 @@ def plot(plot_name: str, trajectories: dict,
 
 
 def print_runtime_ratios(runtime_trajectories):
-    """Print the ratio of powerset to laser runtime for the first 6 values."""
+    """Print the ratio of combinatorial to laser runtime for the first 6 values."""
     K = 6
     laser_clients, laser_runtimes = runtime_trajectories["laser"]
-    powerset_clients, powerset_runtimes = runtime_trajectories["powerset"]
+    combinatorial_clients, combinatorial_runtimes = runtime_trajectories["combinatorial"]
 
     laser_clients, laser_runtimes = laser_clients[:K], laser_runtimes[:K]
-    powerset_clients, powerset_runtimes = powerset_clients[:K], powerset_runtimes[:K]
+    combinatorial_clients, combinatorial_runtimes = combinatorial_clients[:K], combinatorial_runtimes[:K]
 
-    assert laser_clients == powerset_clients, "Mismatch in client list"
-    ratios = [p[0] / l[0] for l, p in zip(laser_runtimes, powerset_runtimes)]
+    assert laser_clients == combinatorial_clients, "Mismatch in client list"
+    ratios = [p[0] / l[0] for l, p in zip(laser_runtimes, combinatorial_runtimes)]
     for nc, ratio in zip(laser_clients, ratios):
-        print(f"runtime ratio (powerset/laser) for K={nc} clients: {ratio}")
+        print(f"runtime ratio (combinatorial/laser) for K={nc} clients: {ratio}")
 
 
 def main(project_name, experiments, metric_name, methods):
@@ -118,7 +118,7 @@ def main(project_name, experiments, metric_name, methods):
 
     plot("Runtime scalability", runtime_traj, "Number of clients", "Runtime (min)")
     plot("Performance scalability", metric_traj, "Number of clients", "Test accuracy", (0, 100))
-    if "laser" in methods and "powerset" in methods:
+    if "laser" in methods and "combinatorial" in methods:
         print_runtime_ratios(runtime_traj)
 
 
